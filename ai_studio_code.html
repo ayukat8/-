@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature I Ching ♡ 自然のエレメント占い</title>
+    <style>
+        /* 全体のデザイン */
+        body {
+            font-family: "Shippori Mincho", "Hiragino Mincho ProN", serif;
+            background-color: #fffcf5;
+            color: #5e4e4e;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image: radial-gradient(#e6dfd1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            color: #d4a0a0;
+            letter-spacing: 0.2em;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(189, 173, 173, 0.15);
+            width: 100%;
+            max-width: 380px;
+            border: 1px solid #f0e6d2;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* エレメント（絵）の表示エリア */
+        .visual-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            position: relative;
+            height: 160px;
+        }
+
+        /* 上下のアイコン枠 */
+        .element-box {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* アイコン同士をつなぐ線（エネルギーの流れ） */
+        .connector {
+            width: 2px;
+            height: 15px;
+            background: #e0d4c3;
+            margin: 2px 0;
+        }
+
+        .element-label {
+            font-size: 0.7rem;
+            color: #a89586;
+            font-family: sans-serif;
+            margin-bottom: 5px;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* 結果テキスト */
+        #result-area { display: none; }
+
+        .gua-name {
+            font-size: 1rem;
+            color: #a89586;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .gua-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #5e4e4e;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .gua-msg {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            text-align: left;
+            margin-bottom: 20px;
+            color: #6b5d5d;
+        }
+
+        .lucky-action {
+            background-color: #fdfbf7;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: #8a7575;
+            text-align: center;
+            border: 1px dashed #d4c4b5;
+        }
+
+        button {
+            background-color: #d4a0a0;
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(212, 160, 160, 0.4);
+            font-family: sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        button:hover {
+            background-color: #c48b8b;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>NATURE FORTUNE</h1>
+    
+    <div class="card">
+        <div id="start-view">
+            <p style="color:#888; line-height:1.8;">
+                あなたの悩みは、<br>
+                自然界のどんな風景に似ている？<br>
+                <br>
+                太陽、雨、山、雷...<br>
+                2つのエレメントが答えを映し出します。
+            </p>
+            <button onclick="drawFortune()" style="margin-top:20px;">風景を映す</button>
+        </div>
+
+        <div id="result-area">
+            <div class="visual-area" id="visual-container">
+                <!-- ここにJSで絵文字が入ります -->
+            </div>
+            
+            <div id="r-name" class="gua-name"></div>
+            <div id="r-title" class="gua-title"></div>
+            <div id="r-msg" class="gua-msg"></div>
+            
+            <div class="lucky-action">
+                <b>♡ ラッキーアクション</b><br>
+                <span id="r-action"></span>
+            </div>
+            
+            <button onclick="reset()" style="margin-top:25px; background-color:#e6dfd1; color:#8a7575; padding:10px 30px; font-size:0.8rem;">もう一度</button>
+        </div>
+    </div>
+
+    <script>
+        // 8つのエレメント定義（JD向けアイコン設定）
+        const elements = {
+            '天': { icon: '☀️', label: 'お日様' },
+            '沢': { icon: '🌊', label: '川・湖' },
+            '火': { icon: '🔥', label: '炎・灯' },
+            '雷': { icon: '⚡', label: '雷・音' },
+            '風': { icon: '🍃', label: '風・木' },
+            '水': { icon: '💧', label: '雨・水' },
+            '山': { icon: '⛰️', label: '山・岩' },
+            '地': { icon: '🌱', label: '大地' }
+        };
+
+        // 64卦データ（名称から自動でエレメントを解析します）
+        const iChingData = [
+            {n:"乾為天", t:"無敵のパワー！", m:"空に太陽が2つあるような、最強のエネルギー。自信を持って進めば何でも叶います。", a:"派手めなメイク・新しい挑戦"},
+            {n:"坤為地", t:"優しさで包む", m:"広大な大地のように、どっしりと受け止める時。周りをサポートすると愛され度UP。", a:"クッション・手作りお菓子"},
+            {n:"水雷屯", t:"産みの苦しみ", m:"冷たい雨の中で雷が鳴っています。今は辛くても、植物が芽吹く直前の大切な時期。", a:"植物の世話・ストレッチ"},
+            {n:"山水蒙", t:"霧の中の学び", m:"山のふもとに霧がかかっています。先が見えない時は、素直に先生や先輩に頼るのが正解。", a:"図書館・メンターへの相談"},
+            {n:"水天需", t:"待てばご馳走", m:"空で雨雲が待機しています。恵みの雨は必ず降るので、今は美味しいご飯を食べて待つ時。", a:"カフェ巡り・保湿ケア"},
+            {n:"天水訟", t:"ケンカ注意報", m:"天と水が逆方向に進んでいます。意見が食い違いやすいので、無理に戦わず距離を置いて。", a:"一人の時間・イヤホン"},
+            {n:"地水師", t:"チームワーク", m:"地下に水脈があるように、見えない所で協力し合う時。一人で悩まず仲間に頼って。", a:"グループ通話・スポーツ観戦"},
+            {n:"水地比", t:"仲良しの輪", m:"大地に水が染み込むように、親密になれる時。友達や彼と楽しい時間を過ごせそう。", a:"お揃いのアイテム・鍋パ"},
+            {n:"風天小畜", t:"ちょっと待った", m:"空に風が吹いていますが、雨は降りません。少し邪魔が入りそうなので、現状維持が吉。", a:"部屋の片付け・貯金"},
+            {n:"天沢履", t:"虎の尾を踏む", m:"お日様の下に深い川があります。ドキドキする状況ですが、礼儀正しく慎重に進めば大丈夫。", a:"ヒールのある靴・敬語"},
+            {n:"地天泰", t:"平和と繁栄", m:"空気が循環し、全てがスムーズ。最高にハッピーで、恋も就活もトントン拍子に進みます。", a:"新しい服・ランチ会"},
+            {n:"天地否", t:"ふさがり気味", m:"天と地が離れてしまい、意思疎通ができません。今は無理に動かず、自分を守る時。", a:"SNSデトックス・早寝"},
+            {n:"天火同人", t:"仲間と共に", m:"焚き火を囲むように、志を同じくする仲間と出会えます。オープンな心が鍵。", a:"イベント参加・コラボ動画"},
+            {n:"火天大有", t:"太陽の輝き", m:"空高い位置に太陽があります。あなたの魅力が一番輝く時。告白やアピールは大成功！", a:"ゴールドのアクセ・日向ぼっこ"},
+            {n:"地山謙", t:"謙虚が最強", m:"山が地の下にある形。実力があるのに謙虚な姿勢が、素敵な縁を引き寄せます。", a:"お辞儀・感謝を伝える"},
+            {n:"雷地豫", t:"ワクワクする未来", m:"大地の上で雷が鳴り、春が来たことを告げています。楽しい予定の準備を始めましょう！", a:"音楽フェス・旅行計画"},
+            {n:"沢雷随", t:"流れに乗る", m:"川の流れに従うように、自分のこだわりを捨てて流行に乗ると良い出会いがあります。", a:"トレンドのコスメ・映画"},
+            {n:"山風蠱", t:"リセットの時", m:"山あいに風が吹かず、空気が淀んでいます。腐れ縁や悪い習慣を断ち切るなら今！", a:"断捨離・データ整理"},
+            {n:"地沢臨", t:"希望の訪れ", m:"地下の水脈が溢れ出るように、喜びが近づいています。やりたいことは今すぐ始めて。", a:"新しい手帳・朝活"},
+            {n:"風地観", t:"じっくり観察", m:"風が大地を吹き抜けるように、広い視野で周りを見て。憧れの人を観察して真似よう。", a:"美術館・人間観察"},
+            {n:"火雷噬嗑", t:"邪魔者は噛み砕く", m:"雷と火の激しい組み合わせ。障害があっても強気で立ち向かえば解決します。", a:"硬い食べ物・筋トレ"},
+            {n:"山火賁", t:"美しさの極み", m:"山に夕日が映えています。外見を磨くことで運気アップ！ネイルやメイクに力を入れて。", a:"ネイルサロン・アート鑑賞"},
+            {n:"山地剥", t:"ピンチかも", m:"山が崩れかけています。足元が不安定なので、新しいことはせず家でゆっくりして。", a:"映画鑑賞・マッサージ"},
+            {n:"地雷復", t:"復活の兆し", m:"地下で雷（エネルギー）が動き出しました。冬が終わり春が来るように、運気が戻ります。", a:"旧友に連絡・復習"},
+            {n:"天雷無妄", t:"ありのままで", m:"空に雷が鳴る自然の姿。計算や駆け引きはせず、純粋な気持ちで行動して。", a:"すっぴん風メイク・自然"},
+            {n:"山天大畜", t:"エネルギー充電", m:"山の中に天のパワーを溜め込んでいます。今は勉強やスキルアップに最適な時期。", a:"資格の勉強・貯金箱"},
+            {n:"山雷頤", t:"口は災いの元", m:"言葉選びと食事に注意。暴飲暴食や余計な一言でトラブルにならないよう丁寧に。", a:"オーガニックフード・歯磨き"},
+            {n:"沢風大過", t:"荷が重すぎる", m:"木が水に沈みそうです。プレッシャーを感じたら、一人で抱え込まずリラックスして。", a:"深呼吸・整体"},
+            {n:"坎為水", t:"荒波の中", m:"水が重なる深い谷。悩みが多いですが、水のように柔軟に流せば大丈夫です。", a:"水を飲む・お風呂"},
+            {n:"離為火", t:"燃え上がる情熱", m:"炎が重なる情熱的な時。熱しやすく冷めやすいので、冷静さを忘れずに。", a:"キャンドル・アイメイク"},
+            {n:"沢山咸", t:"ビビッと感じる", m:"山の上に湖がある神秘的な風景。直感が冴え、恋愛運が絶好調です！", a:"香水・ラブソング"},
+            {n:"雷風恒", t:"変わらぬ愛", m:"雷と風はいつもセット。マンネリは安定の証です。いつもの日常を大切にして。", a:"日記・ルーティン動画"},
+            {n:"天山遯", t:"逃げるが勝ち", m:"天が山より高く遠ざかります。嫌なことからは逃げてOK。距離を置いて自分を守って。", a:"SNSログアウト・隠れ家カフェ"},
+            {n:"雷天大壮", t:"勢い余って", m:"空の上で雷が鳴っています。パワー全開ですが暴走注意。一度深呼吸してから動いて。", a:"スポーツ・車に注意"},
+            {n:"火地晋", t:"トントン拍子", m:"太陽が地上に昇りました。どんどん前進できる時。自信を持ってアピールを！", a:"明るい色の服・プレゼン"},
+            {n:"地火明夷", t:"能ある鷹は", m:"太陽が沈んでしまいました。今は才能を隠して、目立たないように過ごすのが賢いです。", a:"サングラス・夜更かし禁止"},
+            {n:"風火家人", t:"内側を整える", m:"風が火を強めています。外で遊ぶより、家の中や家族・親友との時間を大切に。", a:"ホームパーティー・料理"},
+            {n:"火沢睽", t:"すれ違い", m:"炎は上へ、水は下へ。意見が合いませんが「違う視点だ」と割り切れば面白い発見が。", a:"異文化交流・眼鏡を拭く"},
+            {n:"水山蹇", t:"行き止まり", m:"山の前に川が流れて進めません。無理に進まず、立ち止まって計画の見直しを。", a:"足のマッサージ・寄り道"},
+            {n:"雷水解", t:"雪解け", m:"雷が鳴って雨が降り、緊張が解けます。悩みが解決しスッキリするチャンス！", a:"早起き・換気"},
+            {n:"山沢損", t:"損して得取れ", m:"山の土を削って池を埋める形。今は相手に尽くすことで、後から大きな愛が返ってきます。", a:"ボランティア・プレゼント"},
+            {n:"風雷益", t:"ボーナスタイム", m:"風と雷が勢いを増しています。何をしてもうまくいく利益の多い時。積極的に動いて！", a:"新しい文房具・投資"},
+            {n:"沢天夬", t:"決断の時", m:"空高く水蒸気が昇っています。迷いを断ち切る時。言いにくいこともハッキリ伝えて。", a:"断定口調・書類整理"},
+            {n:"天風姤", t:"偶然の出会い", m:"空の下を風が吹き抜けます。予期せぬ出会いの予感。でもその場の勢いに流されないで。", a:"風通しの良い服・挨拶"},
+            {n:"沢地萃", t:"人が集まる", m:"大地の上に湖があり、潤っています。お祭り騒ぎのように人が集まり人気運UP！", a:"飲み会の幹事・集合写真"},
+            {n:"地風升", t:"ステップアップ", m:"地中で木が育っています。ゆっくりですが確実に上昇中。焦らず一歩ずつ。", a:"階段を使う・観葉植物"},
+            {n:"沢水困", t:"どん詰まり", m:"池の水が枯れてしまいました。今は苦しいですが、ここを耐えれば人間として成長できます。", a:"コメディ映画・口角を上げる"},
+            {n:"水風井", t:"枯れない泉", m:"木の根元に水があります。変わらないものに価値あり。昔からの友達を大切にして。", a:"ミネラルウォーター"},
+            {n:"沢火革", t:"革命を起こせ", m:"水と火が戦っています。古い自分を捨てる大チャンス！イメチェンで運命を変えて。", a:"美容院・模様替え"},
+            {n:"火風鼎", t:"新しい調和", m:"木を燃やして料理をしています。環境が整い、協力者と共に成功できる安定した時期。", a:"3人で行動・煮込み料理"},
+            {n:"震為雷", t:"ビックリ仰天", m:"雷が重なって鳴り響いています。衝撃的な出来事がありそうですが、実害はないので落ち着いて。", a:"ニュースを見る・大声を出す"},
+            {n:"艮為山", t:"動かざること", m:"山が重なる不動の姿。今は動くべきではありません。現状維持で心の整理整頓を。", a:"瞑想・登山"},
+            {n:"風山漸", t:"ゆっくり進む", m:"山の上に木が育っています。順番を守ってゆっくり進むことで、確実に幸せなゴールへ。", a:"ウォーキング・コース料理"},
+            {n:"雷沢帰妹", t:"順序が逆", m:"上の雷に下の沢が従っていますが、少し不安定。気持ちが先走って空回りしないよう注意。", a:"カレンダー確認・反省"},
+            {n:"雷火豊", t:"ピーク到達", m:"雷と火、ものすごいエネルギーです！絶頂期なので、今のうちに成果を出し切って。", a:"日中の活動・写真撮影"},
+            {n:"火山旅", t:"さすらいの旅", m:"山の上を火が移動しています。孤独を感じやすいので、旅に出てリフレッシュしよう。", a:"一人旅・知らない駅で降りる"},
+            {n:"巽為風", t:"風のように", m:"風が吹き続けています。迷いやすい時なので、あちこちフラフラせず信頼できる人に聞いて。", a:"アロマ・窓を開ける"},
+            {n:"兌為沢", t:"ニコニコ笑顔", m:"沢が2つ、笑い合っている形です。愛嬌たっぷりで過ごせば、周りも自分も幸せに。", a:"女子会・カラオケ"},
+            {n:"風水渙", t:"悩み霧散", m:"風が水面を散らしています。固まっていた悩みが溶けていく時。遠出もラッキー。", a:"ボート・ヨット・遠出"},
+            {n:"水沢節", t:"ほどほどに", m:"池の水を調整しています。やりすぎは禁物。ダイエットや節約を始めるのに良い時。", a:"家計簿・腹八分目"},
+            {n:"風沢中孚", t:"真心を込めて", m:"池の上を風が渡ります。嘘のない純粋な心が相手に届く時。誠実さが愛を呼びます。", a:"手書きの手紙・キス"},
+            {n:"雷山小過", t:"少し控えめに", m:"山の上で雷が鳴っています。高望みせず、身の丈に合った小さな幸せを大切にして。", a:"小鳥グッズ・謙遜"},
+            {n:"水火既済", t:"コンプリート", m:"水と火が正しい位置にあり、完成しました。これ以上の発展はないので、今の幸せを守って。", a:"現状維持・守りに入る"},
+            {n:"火水未済", t:"まだ終わらない", m:"火と水が未完成の状態。でも可能性は無限大！ここから新しい物語が始まります。", a:"未来予想図・諦めない"}
+        ];
+
+        // 卦の名前からエレメントを解析して表示する関数
+        function parseElements(name) {
+            // 基本は漢字2文字（例：水雷）をとる
+            let upperKey = name[0];
+            let lowerKey = name[1];
+
+            // 「〜為〜」のパターン（純卦）の場合の処理
+            // 例：乾為天 -> 天・天
+            if (name.includes('為')) {
+                // '為'の次の文字を取得
+                const elementChar = name[name.indexOf('為') + 1];
+                upperKey = elementChar;
+                lowerKey = elementChar;
+            }
+
+            return {
+                upper: elements[upperKey],
+                lower: elements[lowerKey]
+            };
+        }
+
+        function drawFortune() {
+            const resultArea = document.getElementById('result-area');
+            const startView = document.getElementById('start-view');
+            const visualContainer = document.getElementById('visual-container');
+            
+            // ランダム選択
+            const randomIndex = Math.floor(Math.random() * iChingData.length);
+            const result = iChingData[randomIndex];
+
+            // エレメント解析
+            const visuals = parseElements(result.n);
+            
+            // 描画（絵文字の生成）
+            visualContainer.innerHTML = `
+                <div class="element-box">
+                    <div>${visuals.upper.icon}</div>
+                    <div class="element-label">${visuals.upper.label}</div>
+                </div>
+                <div class="connector"></div>
+                <div class="element-box">
+                    <div>${visuals.lower.icon}</div>
+                    <div class="element-label">${visuals.lower.label}</div>
+                </div>
+            `;
+
+            // テキスト設定
+            document.getElementById('r-name').innerText = "No." + (randomIndex + 1) + " " + result.n;
+            document.getElementById('r-title').innerText = result.t;
+            document.getElementById('r-msg').innerText = result.m;
+            document.getElementById('r-action').innerText = result.a;
+
+            // 画面切り替え
+            startView.style.display = 'none';
+            resultArea.style.display = 'block';
+        }
+
+        function reset() {
+            document.getElementById('result-area').style.display = 'none';
+            document.getElementById('start-view').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>

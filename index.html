@@ -6,11 +6,11 @@
     <title>ほしのキャンパス｜心・キャリア・身体を整える統合支援</title>
     <meta name="description" content="ほしのキャンパスは、占い・キャリア相談・フィットネスを統合した伴走型の支援の場です。どこから始めてもいい。いつから始めてもいい。あなたに合った入口から、あなたの時間軸で伴走します。ご予約はオンラインで受け付けています。">
 
-    <!-- ▼▼▼ 編集ポイント①：外部予約サイトのURLをここに1回だけ書けば、ページ内のすべての予約ボタンに反映されます ▼▼▼ -->
+    <!-- ▼▼▼ 編集ポイント：STORES予約の予約ページURLをここに1回だけ書けば、ページ内のすべての予約ボタンに反映されます ▼▼▼ -->
     <script>
-        const RESERVE_URL = "https://example.com/your-reservation-page"; // ← RESERVA・STORES予約・Airリザーブ などのURLに差し替えてください
+        const RESERVE_URL = "https://coubic.com/your-page"; // ← STORES予約の予約ページURL（例：https://coubic.com/○○○）に差し替えてください
     </script>
-    <!-- ▲▲▲ 編集ポイント① ▲▲▲ -->
+    <!-- ▲▲▲ 編集ポイント ▲▲▲ -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -286,9 +286,7 @@
         }
         .reserve-steps .step b { display: block; color: var(--accent-deep); margin-bottom: 6px; }
 
-        /* アクセス */
-        .access-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
-        @media (max-width: 720px) { .access-inner { grid-template-columns: 1fr; } }
+        /* ご利用案内 */
         .access-table { font-size: 0.9rem; width: 100%; }
         .access-table th {
             text-align: left;
@@ -298,19 +296,6 @@
             vertical-align: top;
         }
         .access-table td { padding: 10px 0; color: var(--ink-soft); }
-        .map-placeholder {
-            background: #f4ecdd;
-            border: 1px dashed #d4c4a5;
-            border-radius: 16px;
-            min-height: 260px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #a89060;
-            font-size: 0.85rem;
-            text-align: center;
-            padding: 20px;
-        }
 
         /* フッター */
         footer {
@@ -364,7 +349,7 @@
             心・キャリア・身体の統合支援の場です。
         </p>
         <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">ご予約はこちら</a>
-        <span class="btn-note">※ 外部の予約サイトが開きます</span>
+        <span class="btn-note">※ 予約サイト（STORES予約）が開きます</span>
     </div>
 
     <!-- はじめての方へ -->
@@ -540,10 +525,10 @@
             <p class="section-sub">NEWS</p>
             <div class="card">
                 <ul class="news-list">
-                    <!-- ▼ 編集ポイント②：お知らせを追加するときは、この <li> のかたまりをコピーして増やしてください ▼ -->
+                    <!-- ▼ お知らせを追加するときは、この <li> のかたまりをコピーして増やしてください ▼ -->
                     <li><time datetime="2026-07-10">2026.07.10</time><span>ホームページを公開しました。</span></li>
                     <li><time datetime="2026-07-03">2026.07.03</time><span>キャリア相談を、続けやすい月額伴走型にリニューアルしました（学生 月額3,000円／社会人 月額4,000円）。</span></li>
-                    <!-- ▲ 編集ポイント② ▲ -->
+                    <!-- ▲ ここまで ▲ -->
                 </ul>
             </div>
         </div>
@@ -554,40 +539,28 @@
         <div class="container">
             <h2 class="section-title">ご予約について</h2>
             <p class="section-sub">RESERVATION</p>
-            <p>占い・キャリア相談・フィットネス体験のご予約は、外部の予約サイトにて24時間受け付けています。</p>
+            <p>占い・キャリア相談・フィットネスのご予約は、予約サイト「STORES予約」にて24時間受け付けています。</p>
             <div class="reserve-steps">
                 <div class="step"><b>STEP 1</b>下の予約ボタンから予約サイトを開く</div>
                 <div class="step"><b>STEP 2</b>ご希望のメニューと日時を選択</div>
                 <div class="step"><b>STEP 3</b>お名前・連絡先を入力して予約完了！</div>
             </div>
-            <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">予約サイトでご予約する</a>
+            <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">STORES予約でご予約する</a>
             <span class="btn-note">※ 外部の予約サイト（別タブ）が開きます</span>
         </div>
     </section>
 
-    <!-- アクセス -->
-    <section id="access">
+    <!-- ご利用案内 -->
+    <section id="guide">
         <div class="container">
-            <h2 class="section-title">アクセス・ご利用案内</h2>
-            <p class="section-sub">ACCESS</p>
-            <div class="access-inner">
-                <div class="card">
-                    <table class="access-table">
-                        <!-- ▼ 編集ポイント③：住所・営業時間などを実際のものに書き換えてください ▼ -->
-                        <tr><th>名称</th><td>ほしのキャンパス</td></tr>
-                        <tr><th>キャリア相談</th><td>オンライン（ビデオ通話）＋LINEフォロー</td></tr>
-                        <tr><th>占い・フィットネス</th><td>〒000-0000 ○○県○○市○○町0-0-0（オンライン対応もご相談ください）</td></tr>
-                        <tr><th>受付時間</th><td>10:00〜17:00（ご予約制）</td></tr>
-                        <tr><th>お問い合わせ</th><td>メール：info@example.com</td></tr>
-                        <!-- ▲ 編集ポイント③ ▲ -->
-                    </table>
-                </div>
-                <div class="map-placeholder">
-                    <!-- ▼ 編集ポイント④：Googleマップの「共有」→「地図を埋め込む」で取得した <iframe> をこの枠と差し替えてください ▼ -->
-                    ここに Google マップが入ります<br>
-                    （Googleマップで施設を検索 → 共有 → 「地図を埋め込む」のコードを貼り付け）
-                    <!-- ▲ 編集ポイント④ ▲ -->
-                </div>
+            <h2 class="section-title">ご利用案内</h2>
+            <p class="section-sub">GUIDE</p>
+            <div class="card">
+                <table class="access-table">
+                    <tr><th>名称</th><td>ほしのキャンパス</td></tr>
+                    <tr><th>提供形態</th><td>オンライン（ビデオ通話＋LINEフォロー）。全国どこからでもご利用いただけます。</td></tr>
+                    <tr><th>ご予約</th><td>STORES予約にて24時間受付（ご予約制）</td></tr>
+                </table>
             </div>
         </div>
     </section>

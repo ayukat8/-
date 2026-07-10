@@ -11,9 +11,10 @@
     <meta property="og:title" content="ほしのキャンパス｜どこから始めてもいい。いつから始めてもいい。">
     <meta property="og:description" content="占いとキャリア相談で、自分の目的の発見から実現まで伴走する完全オンラインのサービスです。">
     <meta property="og:url" content="https://ayukat8.github.io/-/">
-    <meta property="og:image" content="https://ayukat8.github.io/-/assets/hero-starlit-path.jpg">
+    <meta property="og:image" content="https://ayukat8.github.io/-/assets/hero-journaling-woman.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="preload" as="image" href="assets/hero-starlit-path.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/hero-journaling-woman.jpg" fetchpriority="high">
 
     <!-- ▼▼▼ 編集ポイント：STORES予約の予約ページURLをここに1回だけ書けば、ページ内のすべての予約ボタンに反映されます ▼▼▼ -->
     <script>
@@ -128,7 +129,6 @@
             box-shadow: 0 6px 18px rgba(232, 163, 61, 0.35);
             transition: transform 0.25s, box-shadow 0.25s;
         }
-        .btn-reserve::after { content: "↗"; font-size: 0.9em; }
         .btn-reserve:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 24px rgba(232, 163, 61, 0.45);
@@ -186,7 +186,6 @@
             letter-spacing: 0.16em;
             backdrop-filter: blur(8px);
         }
-        .hero-eyebrow::before { content: "✦"; color: var(--accent); }
         .hero h1 {
             font-size: clamp(2.15rem, 5vw, 4.15rem);
             line-height: 1.45;
@@ -256,15 +255,6 @@
             overflow: hidden;
             text-align: center;
         }
-        .intro-card::before {
-            content: "✦";
-            position: absolute;
-            top: -28px;
-            right: 28px;
-            color: rgba(232, 163, 61, 0.10);
-            font-size: 9rem;
-            line-height: 1;
-        }
         .intro-card strong { color: var(--night); }
         .intro-card .intro-note {
             display: inline-block;
@@ -329,6 +319,145 @@
             font-weight: 700;
         }
         .cta-mid { text-align: center; margin-top: 36px; }
+
+        /* 3つの占い */
+        .fortune-section {
+            padding: 96px 0;
+            background: #f6f2ea;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+        .fortune-heading {
+            max-width: 760px;
+            margin: 0 auto 44px;
+            text-align: center;
+        }
+        .fortune-kicker {
+            margin: 0 0 10px;
+            color: var(--accent-deep);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+        }
+        .fortune-title {
+            margin: 0 0 14px;
+            color: var(--night);
+            font-size: clamp(1.65rem, 4vw, 2.45rem);
+            line-height: 1.5;
+            letter-spacing: 0.08em;
+        }
+        .fortune-title .count {
+            margin-right: 0.08em;
+            color: var(--accent-deep);
+            font-size: 1.35em;
+        }
+        .fortune-heading p:last-child {
+            margin: 0;
+            color: var(--ink-soft);
+            font-size: 0.94rem;
+        }
+        .fortune-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+        .fortune-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 0;
+            padding: 28px 24px 26px;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .fortune-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 24px;
+            right: 24px;
+            height: 3px;
+            border-radius: 0 0 99px 99px;
+            background: var(--fortune-color);
+        }
+        .fortune-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 24px 60px rgba(46, 58, 89, 0.15);
+        }
+        .fortune-card.iching { --fortune-color: #9482b2; }
+        .fortune-card.korean { --fortune-color: #d68779; }
+        .fortune-card.constellation { --fortune-color: var(--night-soft); }
+        .fortune-visual {
+            width: min(190px, 75%);
+            aspect-ratio: 1;
+            margin: 4px auto 22px;
+            overflow: hidden;
+            border: 6px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px var(--line), 0 12px 30px rgba(46, 58, 89, 0.13);
+        }
+        .fortune-visual img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .fortune-index {
+            margin: 0 0 2px;
+            color: var(--fortune-color);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+        }
+        .fortune-card h3 {
+            margin: 0;
+            color: var(--night);
+            font-size: 1.2rem;
+            letter-spacing: 0.1em;
+        }
+        .fortune-rule {
+            width: 52px;
+            height: 1px;
+            margin: 16px auto;
+            background: var(--fortune-color);
+            opacity: 0.45;
+        }
+        .fortune-description {
+            margin: 0;
+            color: var(--ink-soft);
+            font-size: 0.9rem;
+            line-height: 1.9;
+        }
+        .fortune-description strong { color: var(--fortune-color); }
+        .fortune-hint {
+            margin: auto 0 0;
+            padding-top: 20px;
+        }
+        .fortune-hint span {
+            display: inline-block;
+            padding: 6px 15px;
+            border: 1px solid #e5dfeb;
+            border-radius: 99px;
+            background: #faf8fc;
+            color: var(--fortune-color);
+            font-size: 0.76rem;
+            font-weight: 700;
+        }
+        .fortune-card.korean .fortune-hint span { border-color: #eeddd8; background: #fdf9f8; }
+        .fortune-card.constellation .fortune-hint span { border-color: #dce1ec; background: #f7f8fb; }
+        .fortune-note {
+            max-width: 760px;
+            margin: 32px auto 0;
+            color: var(--ink-soft);
+            text-align: center;
+            font-size: 0.84rem;
+        }
 
         /* 方法（二段階モデル） */
         .method-flow {
@@ -485,6 +614,11 @@
             .hero .btn-reserve { width: 100%; padding-inline: 16px; }
             .hero-eyebrow { font-size: 0.7rem; }
             .intro-card { text-align: left; }
+            .fortune-section { padding: 76px 0; }
+            .fortune-grid { grid-template-columns: 1fr; gap: 16px; }
+            .fortune-card { padding: 26px 22px; }
+            .fortune-visual { width: 164px; }
+            .fortune-heading { margin-bottom: 32px; }
             .method-arrow { transform: rotate(90deg); }
             .price-table { font-size: 0.78rem; }
             .price-table th, .price-table td { padding: 12px 8px; }
@@ -496,6 +630,319 @@
             html { scroll-behavior: auto; }
             *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
         }
+
+        /* Instagramの世界観に合わせたデザイン刷新 */
+        :root {
+            --bg: #fffaf6;
+            --ink: #303b63;
+            --ink-soft: #716b78;
+            --accent: #da8399;
+            --accent-deep: #c45f7c;
+            --night: #203967;
+            --night-deep: #172b53;
+            --night-soft: #6876a4;
+            --line: #eddee1;
+            --card: #fffefd;
+            --blush: #f9e8ec;
+            --lavender: #ece6f6;
+            --shadow: 0 16px 44px rgba(83, 67, 92, 0.09);
+        }
+        body {
+            background: var(--bg);
+            background-image: none;
+            color: var(--ink);
+        }
+        .visually-hidden {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+        }
+        .container { max-width: 1120px; }
+        header {
+            background: rgba(255, 250, 246, 0.94);
+            border-color: rgba(237, 222, 225, 0.85);
+        }
+        .header-inner { min-height: 72px; max-width: 1240px; }
+        .logo {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 0;
+            color: var(--night);
+            font-size: 1.12rem;
+            line-height: 1.2;
+            letter-spacing: 0.11em;
+        }
+        .logo-en {
+            margin-top: 3px;
+            color: var(--accent-deep);
+            font-family: "Zen Maru Gothic", sans-serif;
+            font-size: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+        }
+        nav { gap: 14px; }
+        .nav-links { gap: 14px; }
+        nav a { color: #5f6172; font-size: 0.78rem; }
+        .btn-reserve.small { padding: 8px 16px; }
+        nav a:hover { color: var(--accent-deep); }
+        .btn-reserve {
+            border: 1px solid rgba(255,255,255,0.55);
+            background: var(--accent-deep);
+            box-shadow: 0 10px 28px rgba(196, 95, 124, 0.25);
+        }
+        .btn-reserve::after { content: none; }
+        .btn-reserve:hover {
+            background: #b95170;
+            box-shadow: 0 13px 32px rgba(196, 95, 124, 0.3);
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            align-items: stretch;
+            min-height: 660px;
+            padding: 0;
+            background: var(--night);
+            color: #fff;
+            text-align: left;
+            overflow: hidden;
+        }
+        .hero::after { content: none; }
+        .hero-night,
+        .hero-soft { position: relative; min-width: 0; }
+        .hero-night {
+            display: flex;
+            align-items: center;
+            background-color: var(--night-deep);
+            background-image: url("assets/hero-starlit-path.jpg");
+            background-position: 62% center;
+            background-size: cover;
+            background-blend-mode: normal;
+        }
+        .hero-copy {
+            width: 100%;
+            max-width: 610px;
+            margin-left: auto;
+            padding: 78px clamp(30px, 6vw, 90px) 82px clamp(30px, 6vw, 72px);
+        }
+        .hero-eyebrow {
+            margin: 0 0 18px;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: #f5dadd;
+            font-family: "Shippori Mincho", serif;
+            font-size: 0.86rem;
+            letter-spacing: 0.12em;
+            backdrop-filter: none;
+        }
+        .hero-eyebrow::before { content: none; }
+        .hero h1 {
+            margin: 0 0 24px;
+            color: #fffdf7;
+            font-size: clamp(2.75rem, 4.3vw, 3.8rem);
+            line-height: 1.38;
+            letter-spacing: 0.045em;
+            text-shadow: 0 5px 24px rgba(7,18,43,0.26);
+        }
+        .hero h1 span { color: #ffe0aa; }
+        .hero p.catch {
+            max-width: 540px;
+            margin: 0 0 32px;
+            color: rgba(255,255,255,0.84);
+            font-size: 0.94rem;
+            line-height: 2.05;
+            letter-spacing: 0.035em;
+        }
+        .hero .btn-reserve {
+            min-width: min(100%, 370px);
+            padding: 15px 26px;
+            font-size: 0.94rem;
+        }
+        .hero .btn-note { color: rgba(255,255,255,0.68); }
+        .hero-soft { min-height: 660px; background: #fffaf6; }
+        .hero-soft img {
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 100% center;
+        }
+        .hero-soft-copy {
+            position: absolute;
+            z-index: 1;
+            top: 14%;
+            left: 7%;
+            width: 50%;
+            color: var(--ink);
+        }
+        .hero-script {
+            margin: 0 0 10px;
+            color: var(--accent-deep);
+            font-family: "Shippori Mincho", serif;
+            font-size: 0.88rem;
+            font-style: italic;
+            letter-spacing: 0.08em;
+        }
+        .hero-soft-title {
+            margin: 0 0 16px;
+            color: var(--night);
+            font-family: "Shippori Mincho", serif;
+            font-size: clamp(1.15rem, 1.45vw, 1.4rem);
+            font-weight: 700;
+            line-height: 1.8;
+            letter-spacing: 0.06em;
+        }
+        .hero-soft-copy > p:last-child {
+            margin: 0;
+            color: var(--ink-soft);
+            font-size: 0.78rem;
+            line-height: 2;
+        }
+
+        .fortune-teaser {
+            padding: 42px 0 46px;
+            background: #fffefd;
+            border-bottom: 1px solid var(--line);
+        }
+        .fortune-teaser-kicker {
+            margin: 0 0 26px;
+            color: var(--night);
+            font-family: "Shippori Mincho", serif;
+            font-size: 1.15rem;
+            text-align: center;
+            letter-spacing: 0.1em;
+        }
+        .fortune-teaser-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+        .fortune-teaser-item {
+            display: grid;
+            grid-template-columns: 92px minmax(0, 1fr);
+            align-items: center;
+            gap: 18px;
+            min-width: 0;
+            padding: 14px 22px 14px 14px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: #fff;
+            color: var(--night);
+            text-decoration: none;
+            transition: transform .22s ease, border-color .22s ease;
+        }
+        .fortune-teaser-item:hover { transform: translateY(-3px); border-color: #dcb8c3; }
+        .fortune-teaser-item img {
+            display: block;
+            width: 92px;
+            height: 92px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .fortune-teaser-item span { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+        .fortune-teaser-item b { font-family: "Shippori Mincho", serif; font-size: 1rem; letter-spacing: 0.06em; }
+        .fortune-teaser-item small { color: var(--ink-soft); font-size: 0.73rem; }
+
+        main > section:not(.hero):not(.fortune-teaser) { padding-block: 92px; }
+        .section-title {
+            color: var(--night);
+            font-size: clamp(1.55rem, 3vw, 2rem);
+            line-height: 1.55;
+        }
+        .section-sub { color: var(--accent-deep); }
+        .card {
+            border-color: var(--line);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+        }
+        .intro-card {
+            background: #fffefd;
+            box-shadow: 0 20px 55px rgba(83,67,92,0.08);
+        }
+        .intro-card::before { content: none; }
+        .intro-card .intro-note { background: var(--blush); color: var(--accent-deep); }
+        .entry { border-top-width: 2px; }
+        .entry .icon { display: none; }
+        .entry.recommended { border-top-color: var(--accent-deep); }
+        .entry h3 { color: var(--night); }
+        .entry .for { color: var(--accent-deep); }
+        .entry .price-tag { background: #fff8f8; border-color: #e7cfd5; }
+        .badge { background: var(--accent-deep); color: #fff; }
+
+        .fortune-section {
+            background: #f8f4f8;
+            border-color: var(--line);
+        }
+        .fortune-kicker,
+        .fortune-title .count { color: var(--accent-deep); }
+        .fortune-card {
+            border-color: var(--line);
+            border-radius: 28px;
+            box-shadow: 0 18px 48px rgba(83,67,92,0.09);
+        }
+        .fortune-card::before { background: var(--fortune-color); }
+        .method-flow { gap: 22px; }
+        .method-step {
+            flex: 1 1 360px;
+            width: auto;
+            border-color: var(--line);
+            border-radius: 26px;
+            box-shadow: var(--shadow);
+        }
+        .method-step .stage { background: var(--night); color: #fff4d6; }
+        .method-arrow { display: none; }
+        .price-table thead th { background: var(--night); }
+        .reserve-section {
+            background: var(--blush);
+            border-color: var(--line);
+        }
+        .reserve-steps .step { border-color: #e6cdd4; border-radius: 20px; }
+        footer { background: var(--night-deep); }
+        footer .logo { color: #fff; }
+        .footer-social { margin: 0 0 10px; }
+        .footer-social a { color: #f2cbd5; text-decoration: none; }
+        .footer-social a:hover { text-decoration: underline; }
+
+        @media (max-width: 980px) {
+            .nav-links { display: none; }
+            .hero { grid-template-columns: 1fr; }
+            .hero-night { min-height: 600px; }
+            .hero-copy { max-width: none; margin: 0; padding-inline: clamp(24px, 8vw, 72px); }
+            .hero-soft { min-height: 600px; }
+            .hero-soft img { min-height: 600px; object-position: 92% center; }
+            .hero-soft-copy { top: 12%; left: 7%; width: 43%; }
+            .fortune-teaser-grid { grid-template-columns: 1fr; max-width: 620px; margin: 0 auto; }
+        }
+
+        @media (max-width: 640px) {
+            .header-inner { min-height: 64px; }
+            .logo { font-size: .96rem; }
+            .logo-en { font-size: .44rem; }
+            .hero { min-height: auto; padding: 0; }
+            .hero-night { min-height: 610px; background-position: 57% center; }
+            .hero-copy { padding: 76px 20px 66px; }
+            .hero h1 { font-size: clamp(2.5rem, 14vw, 3.65rem); letter-spacing: .04em; }
+            .hero p.catch br { display: none; }
+            .hero-soft { min-height: 570px; }
+            .hero-soft img { min-height: 570px; object-position: 96% center; }
+            .hero-soft-copy { top: 8%; left: 6%; width: 55%; }
+            .hero-soft-title { font-size: 1.08rem; }
+            .hero-soft-copy > p:last-child { font-size: .72rem; }
+            .fortune-teaser { padding: 36px 0 40px; }
+            .fortune-teaser-kicker { font-size: .98rem; line-height: 1.8; }
+            .fortune-teaser-item { grid-template-columns: 76px 1fr; padding: 10px 18px 10px 10px; }
+            .fortune-teaser-item img { width: 76px; height: 76px; }
+            main > section:not(.hero):not(.fortune-teaser) { padding-block: 72px; }
+        }
     </style>
 </head>
 <body>
@@ -504,11 +951,12 @@
 
     <header>
         <div class="header-inner">
-            <a class="logo" href="#top"><span class="star">★</span> ほしのキャンパス</a>
+            <a class="logo" href="#top">ほしのキャンパス<span class="logo-en">HOSHINO CAMPUS</span></a>
             <nav>
                 <div class="nav-links">
                     <a href="#about">はじめての方へ</a>
                     <a href="#menu">メニュー</a>
+                    <a href="#fortune">3つの占い</a>
                     <a href="#method">サポートの流れ</a>
                     <a href="#price">料金</a>
                     <a href="#faq">よくある質問</a>
@@ -520,30 +968,49 @@
 
     <main id="main">
     <!-- ヒーロー -->
-    <div class="hero" id="top">
-        <div class="stars" aria-hidden="true">
-            <span style="top:12%; left:8%;  font-size:14px;">✦</span>
-            <span style="top:22%; left:85%; font-size:18px; animation-delay:0.6s;">✦</span>
-            <span style="top:55%; left:15%; font-size:10px; animation-delay:1.2s;">✦</span>
-            <span style="top:10%; left:55%; font-size:12px; animation-delay:1.8s;">✦</span>
-            <span style="top:40%; left:70%; font-size:16px; animation-delay:0.3s;">✦</span>
-            <span style="top:65%; left:88%; font-size:12px; animation-delay:2.2s;">✦</span>
-            <span style="top:30%; left:35%; font-size:9px;  animation-delay:1.5s;">✦</span>
-        </div>
-        <div class="hero-inner">
+    <section class="hero" id="top" aria-label="ほしのキャンパスのご案内">
+        <div class="hero-night">
             <div class="hero-copy">
-                <p class="hero-eyebrow">占い × キャリア相談｜完全オンライン</p>
-                <h1>どこから始めてもいい。<br>いつから始めてもいい。</h1>
+                <p class="hero-eyebrow">どこから始めてもいい。いつから始めてもいい。</p>
+                <h1><span>占いから、</span><br>未来の選択へ。</h1>
                 <p class="catch">
-                    自分の目的を見つけ、それを叶える道筋を描く。<br>
-                    ほしのキャンパスは、<b>あなたに合った入口から、あなたの時間軸で伴走する</b><br>
-                    心とキャリアの統合支援の場です。
+                    あなたの悩みや迷いに寄り添い、心が軽くなるヒントをお届けします。<br>
+                    その先の一歩を、キャリアサポートと一緒に。
                 </p>
                 <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">まずは20分の占いから予約する</a>
-                <span class="btn-note">予約は約1分で完了・24時間受付 ※ 予約サイト（STORES予約）が開きます</span>
+                <span class="btn-note">予約は約1分で完了・24時間受付</span>
             </div>
         </div>
-    </div>
+        <div class="hero-soft">
+            <img src="assets/hero-journaling-woman.jpg" alt="夜の窓辺でノートに向き合う若い女性の水彩イラスト" width="1536" height="1024" fetchpriority="high">
+            <div class="hero-soft-copy">
+                <p class="hero-script" aria-hidden="true">For your future</p>
+                <p class="hero-soft-title">本当の気持ちに気づくと、<br>未来はやさしく動きはじめる。</p>
+                <p>自分のこと、仕事のこと、恋愛のこと。<br>ひとりで考えて見えなくなったときに、<br>新しい選択肢へつながるきっかけを。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="fortune-teaser" aria-labelledby="fortune-teaser-title">
+        <div class="container">
+            <p class="fortune-teaser-kicker">あなたに合う占いで、今の気持ちを整理しましょう</p>
+            <h2 id="fortune-teaser-title" class="visually-hidden">3つの占い</h2>
+            <div class="fortune-teaser-grid">
+                <a href="#fortune" class="fortune-teaser-item">
+                    <img src="assets/fortune-iching.jpg" alt="" width="760" height="760">
+                    <span><b>イーチンタロット</b><small>今の状況にヒントを</small></span>
+                </a>
+                <a href="#fortune" class="fortune-teaser-item">
+                    <img src="assets/fortune-korean.jpg" alt="" width="760" height="760">
+                    <span><b>韓国占い</b><small>流れを変える方向性を</small></span>
+                </a>
+                <a href="#fortune" class="fortune-teaser-item">
+                    <img src="assets/fortune-constellation.jpg" alt="" width="760" height="760">
+                    <span><b>星座推命</b><small>人生の大きな流れを</small></span>
+                </a>
+            </div>
+        </div>
+    </section>
 
     <!-- はじめての方へ -->
     <section id="about">
@@ -565,14 +1032,13 @@
     </section>
 
     <!-- メニュー（3つの入口） -->
-    <section id="menu" style="padding-top: 0;">
+    <section id="menu">
         <div class="container">
             <h2 class="section-title">メニュー 〜 あなたに合った入口から</h2>
             <p class="section-sub">MENU</p>
             <div class="grid" style="margin-top: 16px;">
                 <div class="card entry recommended">
                     <span class="badge">はじめての方はまずこちら</span>
-                    <div class="icon">🔮</div>
                     <h3>占い（20分）</h3>
                     <div class="for">恋愛・将来・仕事など、漠然としたモヤモヤに</div>
                     <p>
@@ -585,7 +1051,6 @@
                     </div>
                 </div>
                 <div class="card entry">
-                    <div class="icon">🧭</div>
                     <h3>キャリア相談（社会人）</h3>
                     <div class="for">仕事・転職・適職・人生設計を継続的に考えたい方に</div>
                     <p>
@@ -597,7 +1062,6 @@
                     </div>
                 </div>
                 <div class="card entry">
-                    <div class="icon">🎓</div>
                     <h3>学生キャリアプログラム</h3>
                     <div class="for">就活が不安、自分軸が見つからない学生の方に</div>
                     <p>
@@ -612,8 +1076,68 @@
         </div>
     </section>
 
+    <!-- 3つの占い -->
+    <section class="fortune-section" id="fortune">
+        <div class="container">
+            <div class="fortune-heading">
+                <p class="fortune-kicker">自分を知って、未来をもっと輝かせる</p>
+                <h2 class="fortune-title"><span class="count">3</span>つの占いで、あなたの味方に。</h2>
+                <p>目的に合わせて、あなたの「知りたい」に寄り添います。</p>
+            </div>
+
+            <div class="fortune-grid">
+                <article class="fortune-card iching">
+                    <div class="fortune-visual">
+                        <img src="assets/fortune-iching.jpg" alt="易のカードと夜空を描いたイーチンタロットの水彩イラスト" width="760" height="760" loading="lazy">
+                    </div>
+                    <p class="fortune-index">FORTUNE 01</p>
+                    <h3>イーチンタロット</h3>
+                    <span class="fortune-rule" aria-hidden="true"></span>
+                    <p class="fortune-description">
+                        その時の<strong>運気の状態</strong>を読み解き、いま取れる選択肢を広げます。
+                    </p>
+                    <p class="fortune-hint"><span>迷ったときのヒントに</span></p>
+                </article>
+
+                <article class="fortune-card korean">
+                    <div class="fortune-visual">
+                        <img src="assets/fortune-korean.jpg" alt="韓国の伝統的な楼閣と光の道を描いた水彩イラスト" width="760" height="760" loading="lazy">
+                    </div>
+                    <p class="fortune-index">FORTUNE 02</p>
+                    <h3>韓国占い</h3>
+                    <span class="fortune-rule" aria-hidden="true"></span>
+                    <p class="fortune-description">
+                        開運につながる場所や方角を読み解き、<strong>停滞を抜ける方向性</strong>を見つけます。
+                    </p>
+                    <p class="fortune-hint"><span>流れを変えるきっかけに</span></p>
+                </article>
+
+                <article class="fortune-card constellation">
+                    <div class="fortune-visual">
+                        <img src="assets/fortune-constellation.jpg" alt="星座と星の軌道を描いた星座推命の水彩イラスト" width="760" height="760" loading="lazy">
+                    </div>
+                    <p class="fortune-index">FORTUNE 03</p>
+                    <h3>星座推命</h3>
+                    <span class="fortune-rule" aria-hidden="true"></span>
+                    <p class="fortune-description">
+                        人生の大きな<strong>運気の流れ</strong>を読み解き、自分の強みと課題を整理します。
+                    </p>
+                    <p class="fortune-hint"><span>自分らしく輝くために</span></p>
+                </article>
+            </div>
+
+            <p class="fortune-note">
+                占いは未来を決めつけるものではなく、今を見つめ、選択肢を広げるための時間です。
+            </p>
+            <div class="cta-mid">
+                <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">気になる占いを予約する</a>
+                <span class="btn-note">どれを選べばいいか迷ったときも、気になる占いからで大丈夫です</span>
+            </div>
+        </div>
+    </section>
+
     <!-- サポートの流れ（二段階モデル） -->
-    <section id="method" style="padding-top: 0;">
+    <section id="method">
         <div class="container">
             <h2 class="section-title">サポートの流れ 〜 見つけて、実現する</h2>
             <p class="section-sub">METHOD</p>
@@ -631,7 +1155,6 @@
                         書き直し歓迎。1度きりの正解を求めなくて大丈夫です。
                     </p>
                 </div>
-                <div class="method-arrow">→</div>
                 <div class="method-step">
                     <span class="stage">STAGE 2 ── 実現</span>
                     <h3>独自の「9マス」で、実現の道筋を描く</h3>
@@ -650,7 +1173,7 @@
     </section>
 
     <!-- 料金 -->
-    <section id="price" style="padding-top: 0;">
+    <section id="price">
         <div class="container">
             <h2 class="section-title">料金</h2>
             <p class="section-sub">PRICE</p>
@@ -686,7 +1209,7 @@
     </section>
 
     <!-- よくある質問 -->
-    <section id="faq" style="padding-top: 0;">
+    <section id="faq">
         <div class="container">
             <h2 class="section-title">よくある質問</h2>
             <p class="section-sub">FAQ</p>
@@ -716,7 +1239,7 @@
     </section>
 
     <!-- お知らせ -->
-    <section id="news" style="padding-top: 0;">
+    <section id="news">
         <div class="container">
             <h2 class="section-title">お知らせ</h2>
             <p class="section-sub">NEWS</p>
@@ -770,7 +1293,8 @@
     </main>
 
     <footer>
-        <a class="logo" href="#top"><span class="star" style="color: var(--accent);">★</span> ほしのキャンパス</a>
+        <a class="logo" href="#top">ほしのキャンパス</a>
+        <p class="footer-social"><a href="https://www.instagram.com/hoshino_campus/" target="_blank" rel="noopener">Instagram @hoshino_campus</a></p>
         <p style="margin: 0;">&copy; 2026 ほしのキャンパス All Rights Reserved.</p>
     </footer>
 

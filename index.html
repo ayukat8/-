@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ほしのキャンパス｜心・キャリア・身体を整える統合支援</title>
-    <meta name="description" content="ほしのキャンパスは、占い・キャリア相談・フィットネスを統合した伴走型の支援の場です。どこから始めてもいい。いつから始めてもいい。あなたに合った入口から、あなたの時間軸で伴走します。ご予約はオンラインで受け付けています。">
+    <title>ほしのキャンパス｜占いとキャリア相談で、目的の発見から実現まで</title>
+    <meta name="description" content="ほしのキャンパスは、占いとキャリア相談で「自分の目的の発見から実現まで」を伴走するオンラインサービスです。まずは20分の占いから。ご予約はSTORES予約で24時間受け付けています。">
 
     <!-- ▼▼▼ 編集ポイント：STORES予約の予約ページURLをここに1回だけ書けば、ページ内のすべての予約ボタンに反映されます ▼▼▼ -->
     <script>
@@ -185,6 +185,21 @@
             color: var(--ink);
         }
         .entry .price-tag b { color: var(--accent-deep); }
+        .entry .price-tag .per-day { display: block; font-size: 0.75rem; color: var(--ink-soft); margin-top: 2px; }
+        .entry { position: relative; }
+        .badge {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--night);
+            color: #ffe9bd;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            border-radius: 30px;
+            padding: 4px 16px;
+            font-weight: 700;
+        }
+        .cta-mid { text-align: center; margin-top: 36px; }
 
         /* 方法（二段階モデル） */
         .method-flow {
@@ -344,12 +359,12 @@
         <h1>ほしのキャンパス</h1>
         <p class="catch">
             どこから始めてもいい。いつから始めてもいい。<br>
-            自分の目的を見つけ、それを叶える道筋を描き、身体に力を戻す。<br>
+            自分の目的を見つけ、それを叶える道筋を描く。<br>
             ほしのキャンパスは、<b>あなたに合った入口から、あなたの時間軸で伴走する</b><br>
-            心・キャリア・身体の統合支援の場です。
+            心とキャリアの統合支援の場です。
         </p>
-        <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">ご予約はこちら</a>
-        <span class="btn-note">※ 予約サイト（STORES予約）が開きます</span>
+        <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">まずは20分の占いから予約する</a>
+        <span class="btn-note">予約は約1分で完了・24時間受付 ※ 予約サイト（STORES予約）が開きます</span>
     </div>
 
     <!-- はじめての方へ -->
@@ -359,11 +374,12 @@
             <p class="section-sub">ABOUT</p>
             <div class="card">
                 <p style="margin:0;">
-                    ほしのキャンパスは、占い・キャリア相談・フィットネスを組み合わせた統合支援の場です。
-                    「なんとなく不安」「進路や仕事に迷っている」「まず身体を整えたい」——
+                    ほしのキャンパスは、占いとキャリア相談を組み合わせた伴走型の支援の場です。
+                    「なんとなく不安」「進路や仕事に迷っている」——
                     人によって、いま必要な入口は違います。
                     だからここでは、入口をひとつに決めません。
-                    気になるメニューから気軽に始めて、必要になったときにだけ、次の一歩をご案内します。
+                    はじめての方には、<b>20分の占い</b>から始めるのがおすすめです。
+                    モヤモヤを言葉にするだけでも、次の一歩は軽くなります。
                     1回だけのご利用も大歓迎です。
                 </p>
             </div>
@@ -375,46 +391,44 @@
         <div class="container">
             <h2 class="section-title">メニュー 〜 あなたに合った入口から</h2>
             <p class="section-sub">MENU</p>
-            <div class="grid">
+            <div class="grid" style="margin-top: 16px;">
                 <div class="card entry">
+                    <span class="badge">はじめての方はまずこちら</span>
                     <div class="icon">🔮</div>
-                    <h3>占い</h3>
+                    <h3>占い（20分）</h3>
                     <div class="for">恋愛・将来・仕事など、漠然としたモヤモヤに</div>
                     <p>
-                        気軽に試せる単発の占いセッション。不安や迷いを言葉にするところから始めましょう。
+                        20分だから、思い立ったその日に気軽に試せる単発セッション。
+                        不安や迷いを言葉にするところから始めましょう。
                         相談が進路や人生設計の話に深まったときは、キャリア相談への続きかたもご案内できます。
                     </p>
-                    <div class="price-tag">学生 <b>1,500円</b>／回・社会人 <b>2,500円</b>／回</div>
+                    <div class="price-tag">学生 <b>1,500円</b>／回・社会人 <b>2,500円</b>／回
+                        <span class="per-day">コーヒー1〜2杯分で、20分間じっくりあなたの話だけを</span>
+                    </div>
                 </div>
                 <div class="card entry">
                     <div class="icon">🧭</div>
                     <h3>キャリア相談（社会人）</h3>
                     <div class="for">仕事・転職・適職・人生設計を継続的に考えたい方に</div>
                     <p>
-                        月1回60分の個別セッション＋LINEフォローで、毎月伴走する月額型のキャリア相談です。
+                        月1回50分の個別セッション＋LINEフォローで、毎月伴走する月額型のキャリア相談です。
                         1回で答えを出すのではなく、自分の目的を見つけて実現していくプロセスを一緒に進めます。
                     </p>
-                    <div class="price-tag">月額 <b>4,000円</b>（月1回60分＋LINEフォロー）</div>
+                    <div class="price-tag">月額 <b>4,000円</b>（月1回50分＋LINEフォロー）
+                        <span class="per-day">1日あたり約130円で、専属の伴走者がつく</span>
+                    </div>
                 </div>
                 <div class="card entry">
                     <div class="icon">🎓</div>
                     <h3>学生キャリアプログラム</h3>
                     <div class="for">就活が不安、自分軸が見つからない学生の方に</div>
                     <p>
-                        個別オンライン60分×月1回＋LINEフォローで、就活の進行に合わせて6〜12ヶ月伴走します。
+                        個別オンライン50分×月1回＋LINEフォローで、就活の進行に合わせて6〜12ヶ月伴走します。
                         キャリアセンターが教えてくれるのは「就活のやり方」。ここで育てるのは「自分で選ぶ力」です。
                     </p>
-                    <div class="price-tag">月額 <b>3,000円</b>（月1回60分＋LINEフォロー）</div>
-                </div>
-                <div class="card entry">
-                    <div class="icon">💪</div>
-                    <h3>フィットネス</h3>
-                    <div class="for">健康・姿勢・体力づくり・ストレスケアに</div>
-                    <p>
-                        心とキャリアを支える土台は身体です。体験からじっくり続ける月謝制まで、
-                        目的と体力に合わせて無理なく取り組めます。
-                    </p>
-                    <div class="price-tag">体験・月謝制（詳細はご予約時にご案内します）</div>
+                    <div class="price-tag">月額 <b>3,000円</b>（月1回50分＋LINEフォロー）
+                        <span class="per-day">1日あたり約100円。就活の1年を、ひとりで抱えない</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -450,6 +464,10 @@
                     </p>
                 </div>
             </div>
+            <div class="cta-mid">
+                <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">空き枠を見てみる</a>
+                <span class="btn-note">見るだけでもOK。予約サイト（STORES予約）が開きます</span>
+            </div>
         </div>
     </section>
 
@@ -463,30 +481,27 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>占い（単発）</th>
-                            <th>キャリア相談（月額）</th>
+                            <th>占い（単発・20分）</th>
+                            <th>キャリア相談（月額・50分×月1回）</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <th>学生</th>
                             <td class="price">1,500円／回</td>
-                            <td class="price">月額 3,000円<br><span style="font-weight:400; color:var(--ink-soft); font-size:0.8rem;">月1回60分＋LINEフォロー（6〜12ヶ月）</span></td>
+                            <td class="price">月額 3,000円<br><span style="font-weight:400; color:var(--ink-soft); font-size:0.8rem;">月1回50分＋LINEフォロー（6〜12ヶ月）＝1日あたり約100円</span></td>
                         </tr>
                         <tr>
                             <th>社会人</th>
                             <td class="price">2,500円／回</td>
-                            <td class="price">月額 4,000円<br><span style="font-weight:400; color:var(--ink-soft); font-size:0.8rem;">月1回60分＋LINEフォロー</span></td>
-                        </tr>
-                        <tr>
-                            <th>フィットネス</th>
-                            <td colspan="2">体験・月謝制（詳細はご予約時にご案内します）</td>
+                            <td class="price">月額 4,000円<br><span style="font-weight:400; color:var(--ink-soft); font-size:0.8rem;">月1回50分＋LINEフォロー＝1日あたり約130円</span></td>
                         </tr>
                     </tbody>
                 </table>
                 <p style="font-size: 0.8rem; color: var(--ink-soft); margin: 16px 0 0;">
                     ※ 料金はすべて税込です。<br>
-                    ※ 続けやすい月額のかたちで、毎月の伴走を大切にしています。1回だけのご利用ももちろん歓迎です。
+                    ※ 一般的なキャリアカウンセリングは1回5,000円〜15,000円程度が相場ですが、ほしのキャンパスは「1回で答えを出す」のではなく「毎月伴走する」形式のため、誰でも続けられる月額に設定しています。<br>
+                    ※ 1回だけのご利用ももちろん歓迎です。合わないと感じたら、いつでもやめられます。
                 </p>
             </div>
         </div>
@@ -499,6 +514,10 @@
             <p class="section-sub">FAQ</p>
             <div class="card">
                 <div class="faq-item">
+                    <p class="faq-q">何から始めればいいですか？</p>
+                    <p class="faq-a">迷ったら、20分の占い（学生1,500円／社会人2,500円）からどうぞ。短い時間で気軽に話せて、いまのモヤモヤを言葉にするところから始められます。そのうえで、続けて考えたくなったらキャリア相談をご案内します。</p>
+                </div>
+                <div class="faq-item">
                     <p class="faq-q">占いだけ・1回だけの利用でも大丈夫ですか？</p>
                     <p class="faq-a">もちろんです。単発のご利用で完結していただいて構いません。ご相談が進路や人生設計の話に深まったときにだけ、続きかたをご案内しています。</p>
                 </div>
@@ -508,7 +527,7 @@
                 </div>
                 <div class="faq-item">
                     <p class="faq-q">セッションはオンラインですか？</p>
-                    <p class="faq-a">キャリア相談は個別オンライン（60分×月1回）＋LINEフォローが基本です。ワークシートは事前にお送りするので、セッションでは対話に集中できます。</p>
+                    <p class="faq-a">はい、すべてオンラインです。キャリア相談は個別オンライン（50分×月1回）＋LINEフォロー、占いは20分のオンラインセッションです。ワークシートは事前にお送りするので、セッションでは対話に集中できます。</p>
                 </div>
                 <div class="faq-item">
                     <p class="faq-q">途中でやめたくなったら？</p>
@@ -539,14 +558,19 @@
         <div class="container">
             <h2 class="section-title">ご予約について</h2>
             <p class="section-sub">RESERVATION</p>
-            <p>占い・キャリア相談・フィットネスのご予約は、予約サイト「STORES予約」にて24時間受け付けています。</p>
+            <p>占い・キャリア相談のご予約は、予約サイト「STORES予約」にて24時間受け付けています。</p>
+            <p style="font-size: 0.9rem; color: var(--ink-soft); max-width: 560px; margin: 0 auto;">
+                ひとりひとりと丁寧に向き合う個別セッションのため、<b>月にお受けできる人数には限りがあります</b>。
+                「いつか相談しよう」と思っている間にも、就活や仕事のカレンダーは進んでいきます。
+                まずは空き枠をのぞいてみてください。
+            </p>
             <div class="reserve-steps">
                 <div class="step"><b>STEP 1</b>下の予約ボタンから予約サイトを開く</div>
                 <div class="step"><b>STEP 2</b>ご希望のメニューと日時を選択</div>
                 <div class="step"><b>STEP 3</b>お名前・連絡先を入力して予約完了！</div>
             </div>
             <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">STORES予約でご予約する</a>
-            <span class="btn-note">※ 外部の予約サイト（別タブ）が開きます</span>
+            <span class="btn-note">予約は約1分で完了 ※ 外部の予約サイト（別タブ）が開きます</span>
         </div>
     </section>
 
@@ -559,6 +583,7 @@
                 <table class="access-table">
                     <tr><th>名称</th><td>ほしのキャンパス</td></tr>
                     <tr><th>提供形態</th><td>オンライン（ビデオ通話＋LINEフォロー）。全国どこからでもご利用いただけます。</td></tr>
+                    <tr><th>セッション時間</th><td>占い 20分／キャリア相談 50分（月1回）</td></tr>
                     <tr><th>ご予約</th><td>STORES予約にて24時間受付（ご予約制）</td></tr>
                 </table>
             </div>

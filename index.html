@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ほしのキャンパス｜星のようにひとりひとりが輝く場所</title>
-    <meta name="description" content="ほしのキャンパスは、学びと交流のためのあたたかいコミュニティスペースです。見学・ご利用のご予約はオンラインで受け付けています。">
+    <title>ほしのキャンパス｜心・キャリア・身体を整える統合支援</title>
+    <meta name="description" content="ほしのキャンパスは、占い・キャリア相談・フィットネスを統合した伴走型の支援の場です。どこから始めてもいい。いつから始めてもいい。あなたに合った入口から、あなたの時間軸で伴走します。ご予約はオンラインで受け付けています。">
 
     <!-- ▼▼▼ 編集ポイント①：外部予約サイトのURLをここに1回だけ書けば、ページ内のすべての予約ボタンに反映されます ▼▼▼ -->
     <script>
@@ -24,7 +24,6 @@
             --accent: #e8a33d;      /* 星のゴールド */
             --accent-deep: #d18f28;
             --night: #2e3a59;       /* 夜空のネイビー */
-            --pink: #d4a0a0;
             --line: #f0e6d2;
             --card: #ffffff;
         }
@@ -120,14 +119,16 @@
         .hero h1 {
             font-size: clamp(1.8rem, 5vw, 2.8rem);
             letter-spacing: 0.2em;
-            margin: 0 0 16px;
+            margin: 0 0 20px;
         }
         .hero p.catch {
-            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
-            letter-spacing: 0.1em;
-            margin: 0 0 36px;
+            font-size: clamp(0.92rem, 2.5vw, 1.05rem);
+            letter-spacing: 0.08em;
+            margin: 0 auto 36px;
             color: #e9e2d0;
+            max-width: 620px;
         }
+        .hero p.catch b { color: #ffe9bd; }
         .stars span {
             position: absolute;
             color: rgba(255, 235, 180, 0.9);
@@ -164,15 +165,88 @@
             box-shadow: 0 8px 24px rgba(189, 173, 173, 0.12);
         }
 
-        /* 特徴グリッド */
+        /* 入口カード */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
         }
-        .feature .icon { font-size: 2.2rem; margin-bottom: 10px; }
-        .feature h3 { margin: 0 0 10px; font-size: 1.05rem; color: var(--night); }
-        .feature p { margin: 0; font-size: 0.9rem; color: var(--ink-soft); }
+        .entry { display: flex; flex-direction: column; }
+        .entry .icon { font-size: 2.2rem; margin-bottom: 10px; }
+        .entry h3 { margin: 0 0 4px; font-size: 1.08rem; color: var(--night); }
+        .entry .for { font-size: 0.78rem; color: var(--accent-deep); margin-bottom: 10px; letter-spacing: 0.05em; }
+        .entry p { margin: 0 0 14px; font-size: 0.88rem; color: var(--ink-soft); flex: 1; }
+        .entry .price-tag {
+            background: #fdf6e8;
+            border: 1px dashed #e3cfa2;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 0.85rem;
+            color: var(--ink);
+        }
+        .entry .price-tag b { color: var(--accent-deep); }
+
+        /* 方法（二段階モデル） */
+        .method-flow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: stretch;
+            gap: 16px;
+            margin-top: 10px;
+        }
+        .method-step {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 26px 24px;
+            width: 340px;
+            box-shadow: 0 8px 24px rgba(189, 173, 173, 0.12);
+        }
+        .method-step .stage {
+            display: inline-block;
+            background: var(--night);
+            color: #ffe9bd;
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+            border-radius: 30px;
+            padding: 3px 14px;
+            margin-bottom: 12px;
+        }
+        .method-step h3 { margin: 0 0 10px; font-size: 1.1rem; color: var(--night); }
+        .method-step p { margin: 0; font-size: 0.88rem; color: var(--ink-soft); }
+        .method-arrow {
+            align-self: center;
+            font-size: 1.6rem;
+            color: var(--accent);
+        }
+
+        /* 料金表 */
+        .price-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        .price-table th, .price-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid var(--line);
+            text-align: left;
+            vertical-align: top;
+        }
+        .price-table thead th {
+            color: #fff;
+            background: var(--night);
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+        }
+        .price-table thead th:first-child { border-radius: 10px 0 0 10px; }
+        .price-table thead th:last-child { border-radius: 0 10px 10px 0; }
+        .price-table tbody th { color: var(--night); white-space: nowrap; }
+        .price-table td.price { font-weight: 700; color: var(--accent-deep); white-space: nowrap; }
+
+        /* FAQ */
+        .faq-item { border-bottom: 1px dashed var(--line); padding: 18px 4px; }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-q { font-weight: 700; color: var(--night); margin: 0 0 6px; }
+        .faq-q::before { content: "Q. "; color: var(--accent-deep); }
+        .faq-a { margin: 0; font-size: 0.9rem; color: var(--ink-soft); }
+        .faq-a::before { content: "A. "; color: var(--accent-deep); font-weight: 700; }
 
         /* お知らせ */
         .news-list { list-style: none; padding: 0; margin: 0; }
@@ -184,17 +258,8 @@
             border-bottom: 1px dashed var(--line);
             font-size: 0.9rem;
         }
+        .news-list li:last-child { border-bottom: none; }
         .news-list time { color: var(--accent-deep); font-weight: 700; white-space: nowrap; }
-
-        /* 料金表 */
-        .price-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
-        .price-table th, .price-table td {
-            padding: 14px 12px;
-            border-bottom: 1px solid var(--line);
-            text-align: left;
-        }
-        .price-table th { color: var(--night); white-space: nowrap; }
-        .price-table td.price { text-align: right; font-weight: 700; color: var(--accent-deep); white-space: nowrap; }
 
         /* 予約セクション */
         .reserve-section {
@@ -269,10 +334,11 @@
             <a class="logo" href="#top"><span class="star">★</span> ほしのキャンパス</a>
             <nav>
                 <div class="nav-links">
-                    <a href="#about">キャンパスについて</a>
-                    <a href="#news">お知らせ</a>
-                    <a href="#price">ご利用案内</a>
-                    <a href="#access">アクセス</a>
+                    <a href="#about">はじめての方へ</a>
+                    <a href="#menu">メニュー</a>
+                    <a href="#method">サポートの流れ</a>
+                    <a href="#price">料金</a>
+                    <a href="#faq">よくある質問</a>
                 </div>
                 <a class="btn-reserve small js-reserve" href="#" target="_blank" rel="noopener">ご予約</a>
             </nav>
@@ -291,44 +357,178 @@
             <span style="top:30%; left:35%; font-size:9px;  animation-delay:1.5s;">✦</span>
         </div>
         <h1>ほしのキャンパス</h1>
-        <p class="catch">星のように、ひとりひとりが自分のペースで輝ける場所。</p>
-        <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">見学・ご利用のご予約はこちら</a>
+        <p class="catch">
+            どこから始めてもいい。いつから始めてもいい。<br>
+            自分の目的を見つけ、それを叶える道筋を描き、身体に力を戻す。<br>
+            ほしのキャンパスは、<b>あなたに合った入口から、あなたの時間軸で伴走する</b><br>
+            心・キャリア・身体の統合支援の場です。
+        </p>
+        <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">ご予約はこちら</a>
         <span class="btn-note">※ 外部の予約サイトが開きます</span>
     </div>
 
-    <!-- キャンパスについて -->
+    <!-- はじめての方へ -->
     <section id="about">
         <div class="container">
-            <h2 class="section-title">ほしのキャンパスとは</h2>
+            <h2 class="section-title">はじめての方へ</h2>
             <p class="section-sub">ABOUT</p>
-            <div class="card" style="margin-bottom: 28px;">
-                <!-- ▼ 編集ポイント②：施設の紹介文をここに書いてください ▼ -->
+            <div class="card">
                 <p style="margin:0;">
-                    ほしのキャンパスは、学びと交流のためのあたたかいコミュニティスペースです。
-                    子どもから大人まで、誰もが安心して過ごせる「もうひとつの居場所」として、
-                    教室・イベント・スペース貸出などを行っています。
-                    はじめての方は、まずはお気軽に見学にお越しください。
+                    ほしのキャンパスは、占い・キャリア相談・フィットネスを組み合わせた統合支援の場です。
+                    「なんとなく不安」「進路や仕事に迷っている」「まず身体を整えたい」——
+                    人によって、いま必要な入口は違います。
+                    だからここでは、入口をひとつに決めません。
+                    気になるメニューから気軽に始めて、必要になったときにだけ、次の一歩をご案内します。
+                    1回だけのご利用も大歓迎です。
                 </p>
-                <!-- ▲ 編集ポイント② ▲ -->
             </div>
+        </div>
+    </section>
+
+    <!-- メニュー（4つの入口） -->
+    <section id="menu" style="padding-top: 0;">
+        <div class="container">
+            <h2 class="section-title">メニュー 〜 あなたに合った入口から</h2>
+            <p class="section-sub">MENU</p>
             <div class="grid">
-                <!-- ▼ 編集ポイント③：3つの特徴。実際の活動内容に合わせて書き換えてください ▼ -->
-                <div class="card feature">
-                    <div class="icon">🌟</div>
-                    <h3>自分のペースで学べる</h3>
-                    <p>一斉授業ではなく、ひとりひとりに合わせたペースで過ごせる環境を大切にしています。</p>
+                <div class="card entry">
+                    <div class="icon">🔮</div>
+                    <h3>占い</h3>
+                    <div class="for">恋愛・将来・仕事など、漠然としたモヤモヤに</div>
+                    <p>
+                        気軽に試せる単発の占いセッション。不安や迷いを言葉にするところから始めましょう。
+                        相談が進路や人生設計の話に深まったときは、キャリア相談への続きかたもご案内できます。
+                    </p>
+                    <div class="price-tag">学生 <b>1,500円</b>／回・社会人 <b>2,500円</b>／回</div>
                 </div>
-                <div class="card feature">
-                    <div class="icon">🏡</div>
-                    <h3>安心できる居場所</h3>
-                    <p>あたたかい雰囲気の空間で、スタッフが見守りながらサポートします。</p>
+                <div class="card entry">
+                    <div class="icon">🧭</div>
+                    <h3>キャリア相談（社会人）</h3>
+                    <div class="for">仕事・転職・適職・人生設計を継続的に考えたい方に</div>
+                    <p>
+                        月1回60分の個別セッション＋LINEフォローで、毎月伴走する月額型のキャリア相談です。
+                        1回で答えを出すのではなく、自分の目的を見つけて実現していくプロセスを一緒に進めます。
+                    </p>
+                    <div class="price-tag">月額 <b>4,000円</b>（月1回60分＋LINEフォロー）</div>
                 </div>
-                <div class="card feature">
-                    <div class="icon">🎨</div>
-                    <h3>多彩なイベント</h3>
-                    <p>工作・自然体験・季節の行事など、さまざまなイベントを開催しています。</p>
+                <div class="card entry">
+                    <div class="icon">🎓</div>
+                    <h3>学生キャリアプログラム</h3>
+                    <div class="for">就活が不安、自分軸が見つからない学生の方に</div>
+                    <p>
+                        個別オンライン60分×月1回＋LINEフォローで、就活の進行に合わせて6〜12ヶ月伴走します。
+                        キャリアセンターが教えてくれるのは「就活のやり方」。ここで育てるのは「自分で選ぶ力」です。
+                    </p>
+                    <div class="price-tag">月額 <b>3,000円</b>（月1回60分＋LINEフォロー）</div>
                 </div>
-                <!-- ▲ 編集ポイント③ ▲ -->
+                <div class="card entry">
+                    <div class="icon">💪</div>
+                    <h3>フィットネス</h3>
+                    <div class="for">健康・姿勢・体力づくり・ストレスケアに</div>
+                    <p>
+                        心とキャリアを支える土台は身体です。体験からじっくり続ける月謝制まで、
+                        目的と体力に合わせて無理なく取り組めます。
+                    </p>
+                    <div class="price-tag">体験・月謝制（詳細はご予約時にご案内します）</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- サポートの流れ（二段階モデル） -->
+    <section id="method" style="padding-top: 0;">
+        <div class="container">
+            <h2 class="section-title">サポートの流れ 〜 見つけて、実現する</h2>
+            <p class="section-sub">METHOD</p>
+            <p style="text-align:center; max-width: 640px; margin: 0 auto;">
+                ほしのキャンパスのキャリア支援は、<b>「目的の発見」と「目的の実現」の二段階</b>で進みます。
+                答えを与えるのではなく、あなた自身の言葉で目的を見つけ、それを叶える道筋を描くまで伴走します。
+            </p>
+            <div class="method-flow">
+                <div class="method-step">
+                    <span class="stage">STAGE 1 ── 発見</span>
+                    <h3>書くワークで、人生の目的を見つける</h3>
+                    <p>
+                        これまでの歩みをふり返るグラフや、心が動いた瞬間の記録などの書き込み式ワークで、
+                        あなたの価値観・強み・ありたい姿を言葉にしていきます。
+                        書き直し歓迎。1度きりの正解を求めなくて大丈夫です。
+                    </p>
+                </div>
+                <div class="method-arrow">→</div>
+                <div class="method-step">
+                    <span class="stage">STAGE 2 ── 実現</span>
+                    <h3>独自の「9マス」で、実現の道筋を描く</h3>
+                    <p>
+                        見つけた目的を独自の9マスマトリクスに位置づけ、意思決定・人とのつながり・
+                        無理のないペース配分として、小さな行動実験に変えていきます。
+                        毎月のセッションで一歩ずつ前に進みます。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 料金 -->
+    <section id="price" style="padding-top: 0;">
+        <div class="container">
+            <h2 class="section-title">料金</h2>
+            <p class="section-sub">PRICE</p>
+            <div class="card">
+                <table class="price-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>占い（単発）</th>
+                            <th>キャリア相談（月額）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>学生</th>
+                            <td class="price">1,500円／回</td>
+                            <td class="price">月額 3,000円<br><span style="font-weight:400; color:var(--ink-soft); font-size:0.8rem;">月1回60分＋LINEフォロー（6〜12ヶ月）</span></td>
+                        </tr>
+                        <tr>
+                            <th>社会人</th>
+                            <td class="price">2,500円／回</td>
+                            <td class="price">月額 4,000円<br><span style="font-weight:400; color:var(--ink-soft); font-size:0.8rem;">月1回60分＋LINEフォロー</span></td>
+                        </tr>
+                        <tr>
+                            <th>フィットネス</th>
+                            <td colspan="2">体験・月謝制（詳細はご予約時にご案内します）</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.8rem; color: var(--ink-soft); margin: 16px 0 0;">
+                    ※ 料金はすべて税込です。<br>
+                    ※ 続けやすい月額のかたちで、毎月の伴走を大切にしています。1回だけのご利用ももちろん歓迎です。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- よくある質問 -->
+    <section id="faq" style="padding-top: 0;">
+        <div class="container">
+            <h2 class="section-title">よくある質問</h2>
+            <p class="section-sub">FAQ</p>
+            <div class="card">
+                <div class="faq-item">
+                    <p class="faq-q">占いだけ・1回だけの利用でも大丈夫ですか？</p>
+                    <p class="faq-a">もちろんです。単発のご利用で完結していただいて構いません。ご相談が進路や人生設計の話に深まったときにだけ、続きかたをご案内しています。</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-q">大学のキャリアセンターと何が違いますか？</p>
+                    <p class="faq-a">キャリアセンターが教えてくれるのは「就活のやり方」。ここで育てるのは「自分で選ぶ力」です。書くワークで自分の目的を見つけ、独自の9マスで実現する道筋に変える、月1回の個別伴走プログラムです。キャリアセンターとの併用をおすすめしています。</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-q">セッションはオンラインですか？</p>
+                    <p class="faq-a">キャリア相談は個別オンライン（60分×月1回）＋LINEフォローが基本です。ワークシートは事前にお送りするので、セッションでは対話に集中できます。</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-q">途中でやめたくなったら？</p>
+                    <p class="faq-a">月額制なので、ご自身のタイミングで見直していただけます。目標は「自分で考えて選び、試すサイクル」を自走できるようになること。卒業も大切なゴールのひとつです。</p>
+                </div>
             </div>
         </div>
     </section>
@@ -340,48 +540,11 @@
             <p class="section-sub">NEWS</p>
             <div class="card">
                 <ul class="news-list">
-                    <!-- ▼ 編集ポイント④：お知らせを追加するときは、この <li> のかたまりをコピーして増やしてください ▼ -->
+                    <!-- ▼ 編集ポイント②：お知らせを追加するときは、この <li> のかたまりをコピーして増やしてください ▼ -->
                     <li><time datetime="2026-07-10">2026.07.10</time><span>ホームページを公開しました。</span></li>
-                    <li><time datetime="2026-07-01">2026.07.01</time><span>オンラインでのご予約受付を開始しました。</span></li>
-                    <!-- ▲ 編集ポイント④ ▲ -->
+                    <li><time datetime="2026-07-03">2026.07.03</time><span>キャリア相談を、続けやすい月額伴走型にリニューアルしました（学生 月額3,000円／社会人 月額4,000円）。</span></li>
+                    <!-- ▲ 編集ポイント② ▲ -->
                 </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- ご利用案内・料金 -->
-    <section id="price" style="padding-top: 0;">
-        <div class="container">
-            <h2 class="section-title">ご利用案内</h2>
-            <p class="section-sub">GUIDE &amp; PRICE</p>
-            <div class="card">
-                <table class="price-table">
-                    <!-- ▼ 編集ポイント⑤：メニュー名・内容・料金を実際のものに書き換えてください ▼ -->
-                    <tr>
-                        <th>見学・体験</th>
-                        <td>はじめての方向けの見学＆体験（約60分）</td>
-                        <td class="price">無料</td>
-                    </tr>
-                    <tr>
-                        <th>1日利用</th>
-                        <td>フリースペースの1日利用</td>
-                        <td class="price">1,000円</td>
-                    </tr>
-                    <tr>
-                        <th>月額会員</th>
-                        <td>通い放題の月額プラン</td>
-                        <td class="price">10,000円／月</td>
-                    </tr>
-                    <tr>
-                        <th>イベント参加</th>
-                        <td>各種イベント（内容により異なります）</td>
-                        <td class="price">500円〜</td>
-                    </tr>
-                    <!-- ▲ 編集ポイント⑤ ▲ -->
-                </table>
-                <p style="font-size: 0.8rem; color: var(--ink-soft); margin: 16px 0 0;">
-                    ※ 料金はすべて税込です。詳細はご予約時にご確認ください。
-                </p>
             </div>
         </div>
     </section>
@@ -391,7 +554,7 @@
         <div class="container">
             <h2 class="section-title">ご予約について</h2>
             <p class="section-sub">RESERVATION</p>
-            <p>ご見学・ご利用・イベント参加のご予約は、外部の予約サイトにて24時間受け付けています。</p>
+            <p>占い・キャリア相談・フィットネス体験のご予約は、外部の予約サイトにて24時間受け付けています。</p>
             <div class="reserve-steps">
                 <div class="step"><b>STEP 1</b>下の予約ボタンから予約サイトを開く</div>
                 <div class="step"><b>STEP 2</b>ご希望のメニューと日時を選択</div>
@@ -405,25 +568,25 @@
     <!-- アクセス -->
     <section id="access">
         <div class="container">
-            <h2 class="section-title">アクセス</h2>
+            <h2 class="section-title">アクセス・ご利用案内</h2>
             <p class="section-sub">ACCESS</p>
             <div class="access-inner">
                 <div class="card">
                     <table class="access-table">
-                        <!-- ▼ 編集ポイント⑥：住所・営業時間などを実際のものに書き換えてください ▼ -->
+                        <!-- ▼ 編集ポイント③：住所・営業時間などを実際のものに書き換えてください ▼ -->
                         <tr><th>名称</th><td>ほしのキャンパス</td></tr>
-                        <tr><th>住所</th><td>〒000-0000 ○○県○○市○○町0-0-0</td></tr>
-                        <tr><th>開所時間</th><td>10:00〜17:00</td></tr>
-                        <tr><th>休業日</th><td>土曜・日曜・祝日</td></tr>
+                        <tr><th>キャリア相談</th><td>オンライン（ビデオ通話）＋LINEフォロー</td></tr>
+                        <tr><th>占い・フィットネス</th><td>〒000-0000 ○○県○○市○○町0-0-0（オンライン対応もご相談ください）</td></tr>
+                        <tr><th>受付時間</th><td>10:00〜17:00（ご予約制）</td></tr>
                         <tr><th>お問い合わせ</th><td>メール：info@example.com</td></tr>
-                        <!-- ▲ 編集ポイント⑥ ▲ -->
+                        <!-- ▲ 編集ポイント③ ▲ -->
                     </table>
                 </div>
                 <div class="map-placeholder">
-                    <!-- ▼ 編集ポイント⑦：Googleマップの「共有」→「地図を埋め込む」で取得した <iframe> をこの枠と差し替えてください ▼ -->
+                    <!-- ▼ 編集ポイント④：Googleマップの「共有」→「地図を埋め込む」で取得した <iframe> をこの枠と差し替えてください ▼ -->
                     ここに Google マップが入ります<br>
                     （Googleマップで施設を検索 → 共有 → 「地図を埋め込む」のコードを貼り付け）
-                    <!-- ▲ 編集ポイント⑦ ▲ -->
+                    <!-- ▲ 編集ポイント④ ▲ -->
                 </div>
             </div>
         </div>

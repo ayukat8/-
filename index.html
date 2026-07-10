@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ほしのキャンパス｜占いとキャリア相談で、目的の発見から実現まで</title>
     <meta name="description" content="ほしのキャンパスは、占いとキャリア相談で「自分の目的の発見から実現まで」を伴走するオンラインサービスです。まずは20分の占いから。ご予約はSTORES予約で24時間受け付けています。">
+    <meta name="theme-color" content="#24314f">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:title" content="ほしのキャンパス｜どこから始めてもいい。いつから始めてもいい。">
+    <meta property="og:description" content="占いとキャリア相談で、自分の目的の発見から実現まで伴走する完全オンラインのサービスです。">
+    <meta property="og:url" content="https://ayukat8.github.io/-/">
+    <meta property="og:image" content="https://ayukat8.github.io/-/assets/hero-starlit-path.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preload" as="image" href="assets/hero-starlit-path.jpg" fetchpriority="high">
 
     <!-- ▼▼▼ 編集ポイント：STORES予約の予約ページURLをここに1回だけ書けば、ページ内のすべての予約ボタンに反映されます ▼▼▼ -->
     <script>
@@ -24,11 +33,16 @@
             --accent: #e8a33d;      /* 星のゴールド */
             --accent-deep: #d18f28;
             --night: #2e3a59;       /* 夜空のネイビー */
+            --night-deep: #17243f;
+            --night-soft: #52618d;
             --line: #f0e6d2;
             --card: #ffffff;
+            --shadow: 0 18px 50px rgba(46, 58, 89, 0.10);
         }
 
         * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
 
         body {
             margin: 0;
@@ -38,21 +52,37 @@
             background-size: 22px 22px;
             color: var(--ink);
             line-height: 1.9;
+            overflow-x: hidden;
         }
 
         h1, h2, h3 { font-family: "Shippori Mincho", serif; }
 
         a { color: var(--accent-deep); }
+        a:focus-visible { outline: 3px solid #f6c56e; outline-offset: 4px; }
 
-        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+        .skip-link {
+            position: fixed;
+            top: 10px;
+            left: 12px;
+            z-index: 999;
+            transform: translateY(-140%);
+            background: #fff;
+            color: var(--night);
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-weight: 700;
+        }
+        .skip-link:focus { transform: translateY(0); }
 
         /* ヘッダー */
         header {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(255, 252, 245, 0.92);
-            backdrop-filter: blur(6px);
+            background: rgba(255, 252, 245, 0.88);
+            backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--line);
         }
         .header-inner {
@@ -60,7 +90,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 12px 20px;
-            max-width: 960px;
+            max-width: 1120px;
             margin: 0 auto;
         }
         .logo {
@@ -84,7 +114,10 @@
 
         /* ボタン */
         .btn-reserve {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             background: linear-gradient(135deg, var(--accent), var(--accent-deep));
             color: #fff;
             text-decoration: none;
@@ -95,6 +128,7 @@
             box-shadow: 0 6px 18px rgba(232, 163, 61, 0.35);
             transition: transform 0.25s, box-shadow 0.25s;
         }
+        .btn-reserve::after { content: "↗"; font-size: 0.9em; }
         .btn-reserve:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 24px rgba(232, 163, 61, 0.45);
@@ -110,25 +144,66 @@
         /* ヒーロー */
         .hero {
             position: relative;
-            text-align: center;
-            padding: 90px 20px 80px;
-            background: linear-gradient(180deg, var(--night) 0%, #46527a 70%, var(--bg) 100%);
+            min-height: min(780px, calc(100svh - 64px));
+            display: flex;
+            align-items: center;
+            padding: 96px 0 114px;
+            background:
+                linear-gradient(90deg, rgba(19, 32, 57, 0.96) 0%, rgba(25, 40, 69, 0.90) 34%, rgba(26, 41, 70, 0.36) 68%, rgba(26, 41, 70, 0.14) 100%),
+                linear-gradient(0deg, rgba(23, 36, 63, 0.38), rgba(23, 36, 63, 0.08)),
+                url("assets/hero-starlit-path.jpg") center center / cover no-repeat;
             color: #fdf8ee;
             overflow: hidden;
         }
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: auto 0 0;
+            height: 120px;
+            background: linear-gradient(transparent, var(--bg));
+            pointer-events: none;
+        }
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+        .hero-copy { max-width: 690px; }
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 0 22px;
+            padding: 6px 16px;
+            border: 1px solid rgba(255, 233, 189, 0.28);
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffe9bd;
+            font-size: 0.76rem;
+            letter-spacing: 0.16em;
+            backdrop-filter: blur(8px);
+        }
+        .hero-eyebrow::before { content: "✦"; color: var(--accent); }
         .hero h1 {
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
-            letter-spacing: 0.2em;
-            margin: 0 0 20px;
+            font-size: clamp(2.15rem, 5vw, 4.15rem);
+            line-height: 1.45;
+            letter-spacing: 0.08em;
+            margin: 0 0 24px;
+            text-shadow: 0 6px 30px rgba(0,0,0,0.24);
         }
         .hero p.catch {
-            font-size: clamp(0.92rem, 2.5vw, 1.05rem);
-            letter-spacing: 0.08em;
-            margin: 0 auto 36px;
-            color: #e9e2d0;
-            max-width: 620px;
+            font-size: clamp(0.94rem, 2vw, 1.05rem);
+            letter-spacing: 0.045em;
+            margin: 0 0 34px;
+            color: rgba(253, 248, 238, 0.84);
+            max-width: 590px;
         }
         .hero p.catch b { color: #ffe9bd; }
+        .hero .btn-reserve { padding: 15px 30px; }
+        .hero .btn-note { color: rgba(253,248,238,0.7); }
         .stars span {
             position: absolute;
             color: rgba(255, 235, 180, 0.9);
@@ -141,7 +216,8 @@
         }
 
         /* セクション共通 */
-        section { padding: 70px 0; }
+        main { position: relative; }
+        section { padding: 88px 0; scroll-margin-top: 78px; }
         .section-title {
             text-align: center;
             font-size: 1.5rem;
@@ -157,12 +233,48 @@
             margin: 0 0 40px;
         }
 
+        .section-lead {
+            max-width: 720px;
+            margin: 0 auto 36px;
+            text-align: center;
+            color: var(--ink-soft);
+        }
+
         .card {
             background: var(--card);
             border: 1px solid var(--line);
             border-radius: 20px;
             padding: 28px 26px;
-            box-shadow: 0 8px 24px rgba(189, 173, 173, 0.12);
+            box-shadow: var(--shadow);
+        }
+
+        .intro-card {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 44px clamp(26px, 6vw, 64px);
+            overflow: hidden;
+            text-align: center;
+        }
+        .intro-card::before {
+            content: "✦";
+            position: absolute;
+            top: -28px;
+            right: 28px;
+            color: rgba(232, 163, 61, 0.10);
+            font-size: 9rem;
+            line-height: 1;
+        }
+        .intro-card strong { color: var(--night); }
+        .intro-card .intro-note {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 7px 18px;
+            border-radius: 99px;
+            background: #fdf6e8;
+            color: var(--accent-deep);
+            font-weight: 700;
+            font-size: 0.84rem;
         }
 
         /* 入口カード */
@@ -171,8 +283,25 @@
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
         }
-        .entry { display: flex; flex-direction: column; }
-        .entry .icon { font-size: 2.2rem; margin-bottom: 10px; }
+        .entry {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+            border-top: 4px solid transparent;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .entry:hover { transform: translateY(-5px); box-shadow: 0 22px 55px rgba(46,58,89,0.14); }
+        .entry.recommended { border-top-color: var(--accent); }
+        .entry .icon {
+            display: grid;
+            place-items: center;
+            width: 58px;
+            height: 58px;
+            margin-bottom: 16px;
+            border-radius: 18px;
+            background: #fdf6e8;
+            font-size: 1.8rem;
+        }
         .entry h3 { margin: 0 0 4px; font-size: 1.08rem; color: var(--night); }
         .entry .for { font-size: 0.78rem; color: var(--accent-deep); margin-bottom: 10px; letter-spacing: 0.05em; }
         .entry p { margin: 0 0 14px; font-size: 0.88rem; color: var(--ink-soft); flex: 1; }
@@ -216,7 +345,7 @@
             border-radius: 20px;
             padding: 26px 24px;
             width: 340px;
-            box-shadow: 0 8px 24px rgba(189, 173, 173, 0.12);
+            box-shadow: var(--shadow);
         }
         .method-step .stage {
             display: inline-block;
@@ -234,6 +363,13 @@
             align-self: center;
             font-size: 1.6rem;
             color: var(--accent);
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #fff7e8;
+            box-shadow: 0 8px 22px rgba(232,163,61,0.18);
         }
 
         /* 料金表 */
@@ -278,7 +414,12 @@
 
         /* 予約セクション */
         .reserve-section {
-            background: linear-gradient(135deg, #fdf6e8, #fbeeda);
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 15% 30%, rgba(232,163,61,0.16), transparent 24%),
+                radial-gradient(circle at 86% 70%, rgba(46,58,89,0.08), transparent 28%),
+                linear-gradient(135deg, #fdf6e8, #fbeeda);
             border-top: 1px solid var(--line);
             border-bottom: 1px solid var(--line);
             text-align: center;
@@ -314,7 +455,7 @@
 
         /* フッター */
         footer {
-            background: var(--night);
+            background: linear-gradient(135deg, var(--night-deep), var(--night));
             color: #cfc8b8;
             text-align: center;
             padding: 40px 20px 30px;
@@ -324,10 +465,42 @@
 
         @media (max-width: 640px) {
             .nav-links { display: none; }  /* スマホではナビを隠し、予約ボタンのみ表示 */
+            .header-inner { padding: 10px 16px; }
+            .logo { font-size: 1rem; letter-spacing: 0.06em; }
+            .btn-reserve.small { padding: 8px 15px; }
+            .container { padding: 0 18px; }
+            section { padding: 70px 0; }
+            .hero {
+                min-height: 690px;
+                padding: 82px 0 104px;
+                background-position: 62% center;
+                background-image:
+                    linear-gradient(90deg, rgba(19,32,57,0.94), rgba(23,36,63,0.60)),
+                    linear-gradient(0deg, rgba(23,36,63,0.42), rgba(23,36,63,0.08)),
+                    url("assets/hero-starlit-path.jpg");
+            }
+            .hero-inner { padding: 0 20px; }
+            .hero h1 { letter-spacing: 0.04em; }
+            .hero p.catch br { display: none; }
+            .hero .btn-reserve { width: 100%; padding-inline: 16px; }
+            .hero-eyebrow { font-size: 0.7rem; }
+            .intro-card { text-align: left; }
+            .method-arrow { transform: rotate(90deg); }
+            .price-table { font-size: 0.78rem; }
+            .price-table th, .price-table td { padding: 12px 8px; }
+            .price-table tbody th, .price-table td.price { white-space: normal; }
+            .access-table th { white-space: normal; width: 31%; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
         }
     </style>
 </head>
 <body>
+
+    <a class="skip-link" href="#main">本文へ移動</a>
 
     <header>
         <div class="header-inner">
@@ -345,6 +518,7 @@
         </div>
     </header>
 
+    <main id="main">
     <!-- ヒーロー -->
     <div class="hero" id="top">
         <div class="stars" aria-hidden="true">
@@ -356,15 +530,19 @@
             <span style="top:65%; left:88%; font-size:12px; animation-delay:2.2s;">✦</span>
             <span style="top:30%; left:35%; font-size:9px;  animation-delay:1.5s;">✦</span>
         </div>
-        <h1>ほしのキャンパス</h1>
-        <p class="catch">
-            どこから始めてもいい。いつから始めてもいい。<br>
-            自分の目的を見つけ、それを叶える道筋を描く。<br>
-            ほしのキャンパスは、<b>あなたに合った入口から、あなたの時間軸で伴走する</b><br>
-            心とキャリアの統合支援の場です。
-        </p>
-        <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">まずは20分の占いから予約する</a>
-        <span class="btn-note">予約は約1分で完了・24時間受付 ※ 予約サイト（STORES予約）が開きます</span>
+        <div class="hero-inner">
+            <div class="hero-copy">
+                <p class="hero-eyebrow">占い × キャリア相談｜完全オンライン</p>
+                <h1>どこから始めてもいい。<br>いつから始めてもいい。</h1>
+                <p class="catch">
+                    自分の目的を見つけ、それを叶える道筋を描く。<br>
+                    ほしのキャンパスは、<b>あなたに合った入口から、あなたの時間軸で伴走する</b><br>
+                    心とキャリアの統合支援の場です。
+                </p>
+                <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">まずは20分の占いから予約する</a>
+                <span class="btn-note">予約は約1分で完了・24時間受付 ※ 予約サイト（STORES予約）が開きます</span>
+            </div>
+        </div>
     </div>
 
     <!-- はじめての方へ -->
@@ -372,27 +550,27 @@
         <div class="container">
             <h2 class="section-title">はじめての方へ</h2>
             <p class="section-sub">ABOUT</p>
-            <div class="card">
-                <p style="margin:0;">
+            <div class="card intro-card">
+                <p style="margin:0; position:relative;">
                     ほしのキャンパスは、占いとキャリア相談を組み合わせた伴走型の支援の場です。
                     「なんとなく不安」「進路や仕事に迷っている」——
                     人によって、いま必要な入口は違います。
                     だからここでは、入口をひとつに決めません。
-                    はじめての方には、<b>20分の占い</b>から始めるのがおすすめです。
+                    はじめての方には、<strong>20分の占い</strong>から始めるのがおすすめです。
                     モヤモヤを言葉にするだけでも、次の一歩は軽くなります。
-                    1回だけのご利用も大歓迎です。
                 </p>
+                <span class="intro-note">1回だけのご利用も大歓迎です</span>
             </div>
         </div>
     </section>
 
-    <!-- メニュー（4つの入口） -->
+    <!-- メニュー（3つの入口） -->
     <section id="menu" style="padding-top: 0;">
         <div class="container">
             <h2 class="section-title">メニュー 〜 あなたに合った入口から</h2>
             <p class="section-sub">MENU</p>
             <div class="grid" style="margin-top: 16px;">
-                <div class="card entry">
+                <div class="card entry recommended">
                     <span class="badge">はじめての方はまずこちら</span>
                     <div class="icon">🔮</div>
                     <h3>占い（20分）</h3>
@@ -589,6 +767,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <footer>
         <a class="logo" href="#top"><span class="star" style="color: var(--accent);">★</span> ほしのキャンパス</a>

@@ -10,11 +10,11 @@
     <meta property="og:locale" content="ja_JP">
     <meta property="og:title" content="ほしのキャンパス｜どこから始めてもいい。いつから始めてもいい。">
     <meta property="og:description" content="占いとキャリア相談で、自分の目的の発見から実現まで伴走する完全オンラインのサービスです。">
-    <meta property="og:url" content="https://ayukat8.github.io/-/">
-    <meta property="og:image" content="https://ayukat8.github.io/-/assets/hero-journaling-woman.jpg">
+    <meta property="og:url" content="https://hoshino-campus-official.mi-fortia-corporis.chatgpt.site/">
+    <meta property="og:image" content="https://hoshino-campus-official.mi-fortia-corporis.chatgpt.site/assets/hero-journaling-woman-v2.png">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="preload" as="image" href="assets/hero-starlit-path.jpg" fetchpriority="high">
-    <link rel="preload" as="image" href="assets/hero-journaling-woman.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/hero-journaling-woman-v2.png" fetchpriority="high">
 
     <!-- ▼▼▼ 編集ポイント：STORES予約の予約ページURLをここに1回だけ書けば、ページ内のすべての予約ボタンに反映されます ▼▼▼ -->
     <script>
@@ -766,27 +766,54 @@
             font-size: 0.94rem;
         }
         .hero .btn-note { color: rgba(255,255,255,0.68); }
-        .hero-soft { min-height: 660px; background: #fffaf6; }
+        .hero-soft {
+            --hero-shift-x: 0px;
+            --hero-shift-y: 0px;
+            --hero-tilt-x: 0deg;
+            --hero-tilt-y: 0deg;
+            --hero-copy-x: 0px;
+            --hero-copy-y: 0px;
+            min-height: 660px;
+            background: #fffaf6;
+            perspective: 1200px;
+            transform-style: preserve-3d;
+            isolation: isolate;
+        }
         .hero-soft img {
             position: absolute;
-            inset: 0;
+            inset: -2%;
             display: block;
-            width: 100%;
-            height: 100%;
+            width: 104%;
+            height: 104%;
             object-fit: cover;
             object-position: 100% center;
+            transform: translate3d(var(--hero-shift-x), var(--hero-shift-y), 0) rotateX(var(--hero-tilt-x)) rotateY(var(--hero-tilt-y)) scale(1.035);
+            transform-origin: center center;
+            transform-style: preserve-3d;
+            transition: transform 180ms cubic-bezier(.22,.61,.36,1), filter 260ms ease;
+            will-change: transform;
         }
         .hero-soft-copy {
             position: absolute;
-            z-index: 1;
+            z-index: 2;
             top: 14%;
-            left: 7%;
-            width: 50%;
-            color: var(--ink);
+            left: -1%;
+            width: min(68%, 340px);
+            box-sizing: border-box;
+            padding: 20px 22px 22px;
+            border: 1px solid rgba(99, 73, 91, 0.16);
+            border-radius: 18px;
+            background: rgba(255, 253, 248, 0.8);
+            box-shadow: 0 14px 36px rgba(46, 39, 58, 0.1);
+            color: #332f38;
+            backdrop-filter: blur(12px) saturate(1.08);
+            transform: translate3d(var(--hero-copy-x), var(--hero-copy-y), 52px);
+            transition: transform 220ms cubic-bezier(.22,.61,.36,1), background-color 220ms ease;
+            will-change: transform;
         }
         .hero-script {
             margin: 0 0 10px;
-            color: var(--accent-deep);
+            color: #b64064;
             font-family: "Shippori Mincho", serif;
             font-size: 0.88rem;
             font-style: italic;
@@ -794,7 +821,7 @@
         }
         .hero-soft-title {
             margin: 0 0 16px;
-            color: var(--night);
+            color: #172d54;
             font-family: "Shippori Mincho", serif;
             font-size: clamp(1.15rem, 1.45vw, 1.4rem);
             font-weight: 700;
@@ -803,9 +830,15 @@
         }
         .hero-soft-copy > p:last-child {
             margin: 0;
-            color: var(--ink-soft);
-            font-size: 0.78rem;
+            color: #403b45;
+            font-size: 0.84rem;
+            font-weight: 500;
             line-height: 2;
+        }
+
+        @keyframes hero-soft-float {
+            0%, 100% { transform: translate3d(-0.4%, -0.2%, 0) rotateX(0.4deg) rotateY(-0.6deg) scale(1.04); }
+            50% { transform: translate3d(0.5%, 0.35%, 0) rotateX(-0.45deg) rotateY(0.7deg) scale(1.055); }
         }
 
         .fortune-teaser {
@@ -919,7 +952,7 @@
             .hero-copy { max-width: none; margin: 0; padding-inline: clamp(24px, 8vw, 72px); }
             .hero-soft { min-height: 600px; }
             .hero-soft img { min-height: 600px; object-position: 92% center; }
-            .hero-soft-copy { top: 12%; left: 7%; width: 43%; }
+            .hero-soft-copy { top: 12%; left: 7%; width: min(48%, 420px); }
             .fortune-teaser-grid { grid-template-columns: 1fr; max-width: 620px; margin: 0 auto; }
         }
 
@@ -934,14 +967,30 @@
             .hero p.catch br { display: none; }
             .hero-soft { min-height: 570px; }
             .hero-soft img { min-height: 570px; object-position: 96% center; }
-            .hero-soft-copy { top: 8%; left: 6%; width: 55%; }
+            .hero-soft-copy { top: 7%; left: 5%; width: 72%; padding: 16px 17px 18px; border-radius: 15px; }
             .hero-soft-title { font-size: 1.08rem; }
-            .hero-soft-copy > p:last-child { font-size: .72rem; }
+            .hero-soft-copy > p:last-child { font-size: .76rem; line-height: 1.9; }
             .fortune-teaser { padding: 36px 0 40px; }
             .fortune-teaser-kicker { font-size: .98rem; line-height: 1.8; }
             .fortune-teaser-item { grid-template-columns: 76px 1fr; padding: 10px 18px 10px 10px; }
             .fortune-teaser-item img { width: 76px; height: 76px; }
             main > section:not(.hero):not(.fortune-teaser) { padding-block: 72px; }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            .hero-soft img { animation: hero-soft-float 8s ease-in-out infinite; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-soft img {
+                animation: none;
+                transform: scale(1.035);
+                transition: none;
+            }
+            .hero-soft-copy {
+                transform: translate3d(0, 0, 0);
+                transition: none;
+            }
         }
     </style>
 </head>
@@ -982,7 +1031,7 @@
             </div>
         </div>
         <div class="hero-soft">
-            <img src="assets/hero-journaling-woman.jpg" alt="夜の窓辺でノートに向き合う若い女性の水彩イラスト" width="1536" height="1024" fetchpriority="high">
+            <img src="assets/hero-journaling-woman-v2.png" alt="夜の窓辺で、左手で頬を支えながら右手でノートに書き込む若い女性の水彩イラスト" width="1536" height="1024" fetchpriority="high">
             <div class="hero-soft-copy">
                 <p class="hero-script" aria-hidden="true">For your future</p>
                 <p class="hero-soft-title">本当の気持ちに気づくと、<br>未来はやさしく動きはじめる。</p>
@@ -1301,6 +1350,42 @@
     <script>
         // ページ内すべての予約ボタンに、冒頭で設定した予約サイトURLを反映
         document.querySelectorAll('.js-reserve').forEach(a => { a.href = RESERVE_URL; });
+
+        // メインビジュアルに、操作に反応する控えめな3Dパララックスを付ける
+        const heroSoft = document.querySelector('.hero-soft');
+        const canUseHeroParallax = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+            && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (heroSoft && canUseHeroParallax) {
+            let heroFrame = 0;
+
+            const resetHeroParallax = () => {
+                heroSoft.style.setProperty('--hero-shift-x', '0px');
+                heroSoft.style.setProperty('--hero-shift-y', '0px');
+                heroSoft.style.setProperty('--hero-tilt-x', '0deg');
+                heroSoft.style.setProperty('--hero-tilt-y', '0deg');
+                heroSoft.style.setProperty('--hero-copy-x', '0px');
+                heroSoft.style.setProperty('--hero-copy-y', '0px');
+            };
+
+            heroSoft.addEventListener('pointermove', (event) => {
+                const rect = heroSoft.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+                cancelAnimationFrame(heroFrame);
+                heroFrame = requestAnimationFrame(() => {
+                    heroSoft.style.setProperty('--hero-shift-x', `${x * 9}px`);
+                    heroSoft.style.setProperty('--hero-shift-y', `${y * 7}px`);
+                    heroSoft.style.setProperty('--hero-tilt-x', `${y * -2.8}deg`);
+                    heroSoft.style.setProperty('--hero-tilt-y', `${x * 3.4}deg`);
+                    heroSoft.style.setProperty('--hero-copy-x', `${x * -7}px`);
+                    heroSoft.style.setProperty('--hero-copy-y', `${y * -5}px`);
+                });
+            }, { passive: true });
+
+            heroSoft.addEventListener('pointerleave', resetHeroParallax, { passive: true });
+        }
     </script>
 
 </body>

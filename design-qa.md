@@ -1,21 +1,21 @@
 # Design QA
 
-- Source visual truth: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-instagram-redesign\selected-option-2.png`
-- Final implementation screenshot: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-instagram-redesign\implementation-desktop-final.png`
-- Mobile implementation screenshot: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-instagram-redesign\implementation-mobile.png`
-- Focused fortune-section screenshot: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-instagram-redesign\implementation-fortune-section.png`
-- Side-by-side comparison: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-instagram-redesign\design-qa-comparison-desktop.jpg`
-- Desktop viewport: 1536 × 1024
+- Current source visual truth: `C:\Users\ayuka\AppData\Local\Temp\codex-clipboard-fe1d5760-1c36-497e-8a0c-4265d85ee942.png`
+- Current desktop implementation screenshot: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-hero-update\hero-desktop-1080x750.png`
+- Current mobile implementation screenshot: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-hero-update\hero-mobile-390x844.png`
+- Current side-by-side comparison: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-hero-update\qa-comparison-desktop.png`
+- Original direction source: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-instagram-redesign\selected-option-2.png`
+- Desktop viewport: 1080 × 750
 - Mobile viewport: 390 × 844
-- State: homepage top; fortune teaser navigation; fortune detail section
+- State: homepage top and focused right hero panel; pointer-neutral and pointer-active states
 
 ## Full-view comparison evidence
 
-The source and final desktop capture were normalized to the same 1536 × 1024 frame and reviewed together in `design-qa-comparison-desktop.jpg`. The implementation preserves the selected direction's navy/cream split hero, warm rose CTA, Japanese Mincho hierarchy, young-woman editorial illustration, and three circular fortune-method previews. The implementation intentionally uses a straight responsive split instead of the source mock's painted organic seam so the live layout remains stable across breakpoints.
+The supplied screenshot and final desktop capture were normalized to the same 1080 × 750 frame and reviewed together in `qa-comparison-desktop.png`. The edited illustration preserves the watercolor composition while correcting the anatomy: the left hand supports the chin and the right hand writes. The live page preserves the selected navy/cream split direction, warm rose CTA, Japanese Mincho hierarchy, and soft lavender editorial treatment.
 
 ## Focused region evidence
 
-The fortune section was opened through the first teaser link and captured at the section anchor. The three generated watercolor images, headings, descriptions, accent colors, and card rhythm are clear and consistent with the Instagram-derived art direction. A focused capture was needed because the body copy is below the first desktop viewport.
+The right hero panel was reviewed at desktop and mobile sizes. The translucent ivory copy panel, darker navy headline, darker body copy, and pink script remain legible against the detailed watercolor background. On mobile the card stays inside the viewport without horizontal overflow, while the corrected writing hand and night-window setting remain visible.
 
 ## Required fidelity surfaces
 
@@ -31,8 +31,10 @@ The fortune section was opened through the first teaser link and captured at the
 
 - Three fortune teaser links detected; the first link moved the page to `#fortune` with the section positioned below the sticky header.
 - Five reservation CTAs resolve to the same configured STORES reservation URL.
+- Desktop pointer movement changed the hero image and copy panel to non-trivial `matrix3d(...)` transforms; pointer leave resets the CSS variables.
+- Touch-capable devices receive a restrained ambient 3D float, and `prefers-reduced-motion` disables both animation and transitions.
 - Browser console errors checked: none.
-- Images checked: seven loaded, zero broken.
+- Corrected hero asset loaded at its full 1536 × 1024 natural size; no broken images detected.
 - Desktop and mobile horizontal overflow checked: none.
 
 ## Comparison history
@@ -53,6 +55,13 @@ The fortune section was opened through the first teaser link and captured at the
 
 - No actionable P0/P1/P2 mismatches remain.
 - Remaining P3: the source mock uses an organic watercolor seam between the hero halves; the implementation uses a straight split to keep responsive cropping and text positioning predictable.
+
+### Pass 4 — current request
+
+- Earlier findings: [P1] pale body copy blended into the watercolor background; [P1] the woman's two hands read as the same hand; [P2] the hero image had no dimensional motion.
+- Fixes made: added a translucent ivory contrast panel and darker text tokens; generated a corrected illustration with the left hand under the chin and right hand writing; added pointer-responsive CSS 3D parallax, a touch fallback, and reduced-motion handling.
+- Post-fix evidence: `qa-comparison-desktop.png` and `hero-mobile-390x844.png` show readable copy, anatomically correct hands, stable cropping, and no horizontal overflow. Runtime inspection confirmed the 3D transforms activate.
+- No actionable P0/P1/P2 mismatches remain.
 
 ## Findings
 

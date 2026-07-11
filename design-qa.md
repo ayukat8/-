@@ -1,21 +1,21 @@
 # Design QA
 
-- Current source visual truth: `C:\Users\ayuka\AppData\Local\Temp\codex-clipboard-ea051306-9905-4ff2-9e8c-ed7b3152629b.png`
-- Current desktop implementation screenshots: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-stars-update\hero-desktop-final-dim.png` and `hero-desktop-final-peak.png`
-- Current mobile implementation screenshots: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-stars-update\mobile-top.png` and `mobile-woman-static.png`
-- Current side-by-side comparison: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-stars-update\qa-comparison-stars.png`
+- Current source visual truth: `C:\Users\ayuka\AppData\Local\Temp\codex-clipboard-c7659039-cf83-41d9-861b-fd36d7216d91.png`
+- Current desktop implementation screenshot: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-mobile-card-fix\desktop-hero.png`
+- Current mobile implementation screenshot: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-mobile-card-fix\mobile-focused.png`
+- Current side-by-side comparison: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-mobile-card-fix\qa-comparison-mobile-card.png`
 - Original direction source: `C:\Users\ayuka\OneDrive\ドキュメント\codex\renders\hoshino-instagram-redesign\selected-option-2.png`
 - Desktop viewport: 1080 × 750
 - Mobile viewport: 390 × 844
-- State: homepage top; star-glow dim and peak phases; static right hero panel
+- State: right hero panel at desktop and 390 × 844 mobile viewport
 
 ## Full-view comparison evidence
 
-The supplied screenshot and final desktop capture were normalized to the same 1080 × 750 frame and reviewed together in `qa-comparison-stars.png`. The live page preserves the selected navy/cream split direction, warm rose CTA, Japanese Mincho hierarchy, and soft lavender editorial treatment. The left image now gains a subtle phased glow on its existing stars without introducing a visible overlay edge or shifting the navy palette.
+The supplied composition and focused mobile capture were reviewed together in `qa-comparison-mobile-card.png`. The mobile implementation preserves the watercolor image, ivory copy card, Japanese Mincho hierarchy, lavender/pink palette, and soft editorial treatment while changing only the responsive placement needed to keep the woman's face visible.
 
 ## Focused region evidence
 
-The right hero panel was reviewed at desktop and mobile sizes. The translucent ivory copy panel, darker navy headline, darker body copy, and pink script remain legible against the detailed watercolor background. On mobile the card stays inside the viewport without horizontal overflow, while the corrected writing hand and night-window setting remain visible. The image and copy panel remain static at all pointer and touch states.
+The right hero panel was reviewed at desktop and mobile sizes. At 390 × 844 the full face, hair, supporting hand, and writing hand remain unobstructed; the copy card starts near the bottom of the image and overlaps only the lower image edge by 30px. The card stays inside the viewport without horizontal overflow, and desktop retains its original overlay composition.
 
 ## Required fidelity surfaces
 
@@ -64,12 +64,20 @@ The right hero panel was reviewed at desktop and mobile sizes. The translucent i
 - Post-fix evidence: `qa-comparison-desktop.png` and `hero-mobile-390x844.png` show readable copy, anatomically correct hands, stable cropping, and no horizontal overflow. Runtime inspection confirmed the 3D transforms activate.
 - No actionable P0/P1/P2 mismatches remain.
 
-### Pass 5 — current request
+### Pass 5 — previous request
 
 - Requested change: make the stars in the navy path hero glow and restore the woman panel to a non-animated presentation.
 - Fixes made: added two low-opacity, phase-shifted star-brightness passes with soft gradient masks; removed pointer parallax, touch float, transforms, transitions, and motion JavaScript from the woman panel.
 - Post-fix evidence: `hero-desktop-final-dim.png` and `hero-desktop-final-peak.png` show a restrained twinkle without palette drift; `mobile-top.png` and `mobile-woman-static.png` show responsive layout with no overflow. Runtime inspection confirmed the star animation names are active and the woman image remains `transform: none` / `animation-name: none`.
 - Browser console errors: none.
+- No actionable P0/P1/P2 mismatches remain.
+
+### Pass 6 — current request
+
+- Earlier finding: [P1] at 390px width the absolute-positioned copy card covered the woman's face, obscuring the illustration's primary subject.
+- Fix made: on screens up to 640px, changed the right hero to a vertical flow, gave the image a measured 390:500 aspect ratio and adjusted focal point, then placed the copy card in normal flow with a restrained 30px overlap at the image's lower edge.
+- Post-fix evidence: `mobile-focused.png` and `qa-comparison-mobile-card.png` show the woman's full face and both hands unobstructed, readable copy, and consistent visual hierarchy. Desktop remains a two-column hero with the original absolute overlay.
+- Runtime checks: 390 × 844 viewport, no horizontal overflow, card width 343.2px, browser console errors none.
 - No actionable P0/P1/P2 mismatches remain.
 
 ## Findings

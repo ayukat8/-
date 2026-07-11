@@ -988,9 +988,28 @@
             .hero-copy { padding: 76px 20px 66px; }
             .hero h1 { font-size: clamp(2.5rem, 14vw, 3.65rem); letter-spacing: .04em; }
             .hero p.catch br { display: none; }
-            .hero-soft { min-height: 570px; }
-            .hero-soft img { min-height: 570px; object-position: 96% center; }
-            .hero-soft-copy { top: 7%; left: 5%; width: 72%; padding: 16px 17px 18px; border-radius: 15px; }
+            .hero-soft {
+                display: flex;
+                min-height: 0;
+                flex-direction: column;
+                padding-bottom: 18px;
+                background: #fbf6f7;
+            }
+            .hero-soft img {
+                position: relative;
+                inset: auto;
+                min-height: 0;
+                aspect-ratio: 390 / 500;
+                object-position: 88% center;
+            }
+            .hero-soft-copy {
+                position: relative;
+                inset: auto;
+                width: calc(100% - 32px);
+                margin: -30px 16px 0;
+                padding: 18px 18px 20px;
+                border-radius: 15px;
+            }
             .hero-soft-title { font-size: 1.08rem; }
             .hero-soft-copy > p:last-child { font-size: .76rem; line-height: 1.9; }
             .fortune-teaser { padding: 36px 0 40px; }

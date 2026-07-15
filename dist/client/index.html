@@ -320,99 +320,6 @@
         }
         .cta-mid { text-align: center; margin-top: 36px; }
 
-        /* Stripeでのお支払い */
-        .payment-section {
-            background:
-                radial-gradient(circle at 12% 18%, rgba(232,163,61,0.12), transparent 28%),
-                linear-gradient(180deg, #fffaf4 0%, #f8f3ef 100%);
-            border-top: 1px solid var(--line);
-            border-bottom: 1px solid var(--line);
-        }
-        .payment-intro {
-            max-width: 760px;
-            margin: 0 auto 28px;
-            text-align: center;
-            color: var(--ink-soft);
-        }
-        .payment-flow {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            max-width: 820px;
-            margin: 0 auto 30px;
-        }
-        .payment-flow .step {
-            background: rgba(255,255,255,0.78);
-            border: 1px solid var(--line);
-            border-radius: 14px;
-            padding: 14px 12px;
-            color: var(--ink);
-            font-size: 0.84rem;
-            text-align: center;
-        }
-        .payment-flow .step b {
-            display: block;
-            margin-bottom: 4px;
-            color: var(--accent-deep);
-            font-size: 0.72rem;
-            letter-spacing: 0.08em;
-        }
-        .payment-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-        }
-        .payment-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 18px;
-            padding: 22px;
-            border: 1px solid #eadbd2;
-            border-radius: 18px;
-            background: rgba(255,255,255,0.92);
-            box-shadow: 0 12px 34px rgba(46,58,89,0.07);
-        }
-        .payment-card.trial {
-            grid-column: 1 / -1;
-            border-color: #e3cfa2;
-            background: linear-gradient(135deg, #fff9eb 0%, #fff 72%);
-        }
-        .payment-card h3 { margin: 0 0 4px; color: var(--night); font-size: 1rem; }
-        .payment-card p { margin: 0; color: var(--ink-soft); font-size: 0.8rem; }
-        .payment-price { color: var(--accent-deep); font-size: 1.06rem; font-weight: 700; white-space: nowrap; }
-        .btn-payment {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 154px;
-            min-height: 48px;
-            padding: 12px 18px;
-            border: 1px solid rgba(255,255,255,0.55);
-            border-radius: 999px;
-            background: var(--night);
-            color: #fff;
-            font-size: 0.86rem;
-            font-weight: 700;
-            text-decoration: none;
-            box-shadow: 0 8px 22px rgba(46,58,89,0.18);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .btn-payment:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(46,58,89,0.24); }
-        .payment-note {
-            max-width: 820px;
-            margin: 22px auto 0;
-            padding: 16px 18px;
-            border-radius: 14px;
-            background: #fff;
-            border: 1px solid var(--line);
-            color: var(--ink-soft);
-            font-size: 0.82rem;
-            line-height: 1.8;
-            text-align: center;
-        }
-        .payment-note strong { color: var(--night); }
-
         /* 3つの占い */
         .fortune-section {
             padding: 96px 0;
@@ -716,11 +623,6 @@
             .price-table { font-size: 0.78rem; }
             .price-table th, .price-table td { padding: 12px 8px; }
             .price-table tbody th, .price-table td.price { white-space: normal; }
-            .payment-flow { grid-template-columns: 1fr; }
-            .payment-grid { grid-template-columns: 1fr; }
-            .payment-card,
-            .payment-card.trial { grid-column: auto; align-items: stretch; flex-direction: column; }
-            .btn-payment { width: 100%; }
             .access-table th { white-space: normal; width: 31%; }
         }
 
@@ -1140,7 +1042,6 @@
                     <a href="#fortune">3つの占い</a>
                     <a href="#method">サポートの流れ</a>
                     <a href="#price">料金</a>
-                    <a href="#payment">お支払い</a>
                     <a href="#faq">よくある質問</a>
                 </div>
                 <a class="btn-reserve small js-reserve" href="#" target="_blank" rel="noopener">ご予約</a>
@@ -1384,73 +1285,9 @@
                 <p style="font-size: 0.8rem; color: var(--ink-soft); margin: 16px 0 0;">
                     ※ 料金はすべて税込です。<br>
                     ※ キャリア相談も月額契約ではなく、1回ごとのお支払いです。必要なタイミングでご利用ください。<br>
-                    ※ 予約後はHPのお支払いボタン、または24時間以内にお送りする決済案内からお支払いください。コンビニ払いが決済画面に表示される場合は、入金確認に最大4営業日かかることがあります。
+                    ※ ご予約後24時間以内に決済案内をお送りします。案内が届きましたら、24時間以内にお支払いください。
                 </p>
             </div>
-        </div>
-    </section>
-
-    <!-- Stripeでのお支払い -->
-    <section class="payment-section" id="payment">
-        <div class="container">
-            <h2 class="section-title">ご予約済みの方のお支払い</h2>
-            <p class="section-sub">SECURE PAYMENT</p>
-            <p class="payment-intro">
-                STORES予約で日時とメニューを選んだ後、該当するボタンからStripeの安全な決済ページへお進みください。
-                ログイン不要で、予約時と同じメールアドレスをご入力いただけます。
-            </p>
-            <div class="payment-flow" aria-label="予約から支払いまでの流れ">
-                <div class="step"><b>STEP 1</b>STORES予約で日時を選ぶ</div>
-                <div class="step"><b>STEP 2</b>下から同じメニューを選ぶ</div>
-                <div class="step"><b>STEP 3</b>Stripeで支払いを完了する</div>
-            </div>
-            <div class="payment-grid">
-                <article class="payment-card trial">
-                    <div>
-                        <h3>【初回限定】お試し占い 20分</h3>
-                        <p>ほしのキャンパスを初めて利用する方限定</p>
-                    </div>
-                    <span class="payment-price">500円（税込）</span>
-                    <a class="btn-payment" href="https://buy.stripe.com/7sY14o9RdgMq2Ag6RN1VK01" target="_blank" rel="noopener" aria-label="初回限定お試し占い20分をStripeで支払う">Stripeで支払う</a>
-                </article>
-                <article class="payment-card">
-                    <div>
-                        <h3>占い（学生）20分</h3>
-                        <p>学生の方</p>
-                    </div>
-                    <span class="payment-price">1,500円（税込）</span>
-                    <a class="btn-payment" href="https://buy.stripe.com/9B6bJ26F19jYb6Mgsn1VK00" target="_blank" rel="noopener" aria-label="学生向け占い20分をStripeで支払う">Stripeで支払う</a>
-                </article>
-                <article class="payment-card">
-                    <div>
-                        <h3>占い（社会人）20分</h3>
-                        <p>社会人の方</p>
-                    </div>
-                    <span class="payment-price">2,500円（税込）</span>
-                    <a class="btn-payment" href="https://buy.stripe.com/fZu14o6F153I2Ag1xt1VK04" target="_blank" rel="noopener" aria-label="社会人向け占い20分をStripeで支払う">Stripeで支払う</a>
-                </article>
-                <article class="payment-card">
-                    <div>
-                        <h3>キャリア相談（学生）50分</h3>
-                        <p>50分＋LINEフォロー</p>
-                    </div>
-                    <span class="payment-price">3,000円（税込）</span>
-                    <a class="btn-payment" href="https://buy.stripe.com/9B6eVe0gD8fUgr63FB1VK03" target="_blank" rel="noopener" aria-label="学生向けキャリア相談50分をStripeで支払う">Stripeで支払う</a>
-                </article>
-                <article class="payment-card">
-                    <div>
-                        <h3>キャリア相談（社会人）50分</h3>
-                        <p>50分＋LINEフォロー</p>
-                    </div>
-                    <span class="payment-price">4,000円（税込）</span>
-                    <a class="btn-payment" href="https://buy.stripe.com/fZu14oaVh0Nsfn2ekf1VK02" target="_blank" rel="noopener" aria-label="社会人向けキャリア相談50分をStripeで支払う">Stripeで支払う</a>
-                </article>
-            </div>
-            <p class="payment-note">
-                <strong>お支払いだけでは予約完了になりません。</strong><br>
-                先にSTORES予約で日時をお選びください。利用可能な支払方法はStripe決済画面に表示されます。
-                入金確認後、予約確定メールとオンライン通話URLをお送りします。
-            </p>
         </div>
     </section>
 
@@ -1514,7 +1351,7 @@
             <div class="reserve-steps">
                 <div class="step"><b>STEP 1</b>下の予約ボタンから予約サイトを開く</div>
                 <div class="step"><b>STEP 2</b>ご希望のメニューと日時を選択</div>
-                <div class="step"><b>STEP 3</b>HPのお支払いボタンまたは決済案内から24時間以内にお支払い</div>
+                <div class="step"><b>STEP 3</b>決済案内が届いてから24時間以内にお支払い</div>
             </div>
             <a class="btn-reserve js-reserve" href="#" target="_blank" rel="noopener">STORES予約でご予約する</a>
             <span class="btn-note">予約は約1分で完了 ※ 外部の予約サイト（別タブ）が開きます</span>
@@ -1531,7 +1368,7 @@
                     <tr><th>名称</th><td>ほしのキャンパス</td></tr>
                     <tr><th>提供形態</th><td>オンライン（ビデオ通話＋LINEフォロー）。全国どこからでもご利用いただけます。</td></tr>
                     <tr><th>セッション時間</th><td>占い 20分／キャリア相談 50分（いずれも単発利用）</td></tr>
-                    <tr><th>ご予約・お支払い</th><td>ご希望日時の7日前23:59までSTORES予約にて受付。予約後、HPの「ご予約済みの方のお支払い」または24時間以内にお送りする決済案内からお支払いください。利用可能な支払方法はStripe決済画面に表示されます。コンビニ払いが表示される場合は、入金確認に最大4営業日かかることがあります。入金確認後に予約確定となります。</td></tr>
+                    <tr><th>ご予約・お支払い</th><td>ご希望日時の7日前23:59までSTORES予約にて受付。ご予約後24時間以内に決済案内をお送りしますので、案内到着後24時間以内にお支払いください。入金確認後に予約確定となります。</td></tr>
                     <tr><th>お問い合わせ電話</th><td><a href="tel:0287441507">028-744-1507</a></td></tr>
                 </table>
             </div>

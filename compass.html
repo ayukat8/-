@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#fff6f7">
+<title>ゆめコンパス ♡ かわいい方位磁石</title>
+<style>
+    :root {
+        --pink:      #e8a0b4;
+        --pink-soft: #f7d3dc;
+        --lavender:  #c8b6e2;
+        --cream:     #fffaf6;
+        --ink:       #6b5560;
+        --ink-soft:  #a89099;
+        --gold:      #dbb26a;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    html, body { height: 100%; }
+
+    body {
+        margin: 0;
+        font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+        color: var(--ink);
+        background:
+            radial-gradient(circle at 20% 10%, #fdeef3 0%, transparent 55%),
+            radial-gradient(circle at 85% 85%, #ece5f8 0%, transparent 50%),
+            var(--cream);
+        background-attachment: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+        overflow: hidden;
+        min-height: 100dvh;
+    }
+
+    /* ふわふわ舞う星 */
+    .sparkle {
+        position: fixed;
+        color: var(--pink-soft);
+        font-size: 0.9rem;
+        pointer-events: none;
+        animation: floatUp linear infinite;
+        opacity: 0;
+        z-index: 0;
+    }
+    @keyframes floatUp {
+        0%   { transform: translateY(20px) scale(0.6) rotate(0deg);   opacity: 0; }
+        25%  { opacity: 0.9; }
+        100% { transform: translateY(-70vh) scale(1.1) rotate(180deg); opacity: 0; }
+    }
+
+    h1 {
+        font-size: 0.95rem;
+        letter-spacing: 0.3em;
+        color: var(--pink);
+        margin: 0 0 4px;
+        font-weight: normal;
+        z-index: 1;
+    }
+    .subtitle {
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        color: var(--ink-soft);
+        font-family: sans-serif;
+        margin-bottom: 18px;
+        z-index: 1;
+    }
+
+    /* ===== コンパス本体 ===== */
+    .compass-wrap {
+        position: relative;
+        width: min(78vw, 300px);
+        aspect-ratio: 1;
+        z-index: 1;
+    }
+
+    /* 上部の固定インジケーター（スマホが向いている方向） */
+    .indicator {
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0; height: 0;
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;
+        border-top: 15px solid var(--pink);
+        filter: drop-shadow(0 2px 3px rgba(232,160,180,0.5));
+        z-index: 5;
+    }
+
+    .dial {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background:
+            radial-gradient(circle at 50% 42%, #ffffff 0%, #fff7fa 58%, #fbeaf0 100%);
+        box-shadow:
+            0 14px 34px rgba(198,160,175,0.28),
+            inset 0 0 0 1px rgba(255,255,255,0.9),
+            inset 0 0 26px rgba(232,160,180,0.14);
+        transition: transform 0.06s linear;
+        will-change: transform;
+    }
+    .dial::after {
+        content: "";
+        position: absolute;
+        inset: 9%;
+        border-radius: 50%;
+        border: 1px dashed rgba(232,160,180,0.35);
+    }
+
+    /* 目盛り */
+    .tick {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 1px;
+        height: 50%;
+        transform-origin: 50% 100%;
+    }
+    .tick i {
+        display: block;
+        width: 1px;
+        margin: 0 auto;
+        background: rgba(200,166,180,0.45);
+        border-radius: 1px;
+    }
+    .tick.minor i { height: 6px; }
+    .tick.major i { height: 11px; background: rgba(232,160,180,0.75); width: 2px; }
+
+    /* 方位の文字 */
+    .label {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        height: 50%;
+        transform-origin: 50% 100%;
+        font-size: 1.05rem;
+        color: var(--ink-soft);
+        letter-spacing: 0;
+    }
+    .label span {
+        display: block;
+        padding-top: 15%;
+    }
+    .label.north span {
+        color: var(--pink);
+        font-size: 1.25rem;
+    }
+
+    /* ラッキー方位のしるし */
+    .lucky-mark {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        height: 50%;
+        transform-origin: 50% 100%;
+        font-size: 1.1rem;
+        color: var(--gold);
+        z-index: 3;
+        pointer-events: none;
+    }
+    .lucky-mark span {
+        display: block;
+        padding-top: 78%;
+        text-shadow: 0 0 8px rgba(219,178,106,0.5);
+        animation: twinkle 1.8s ease-in-out infinite;
+    }
+    @keyframes twinkle {
+        0%, 100% { opacity: 1;   transform: scale(1); }
+        50%      { opacity: 0.5; transform: scale(0.82); }
+    }
+
+    /* 針（北を指す） */
+    .needle {
+        position: absolute;
+        left: 50%;
+        top: 12%;
+        width: 12px;
+        height: 38%;
+        margin-left: -6px;
+        background: linear-gradient(to bottom, var(--pink) 0%, #f3bccb 100%);
+        clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+        filter: drop-shadow(0 2px 4px rgba(232,160,180,0.45));
+        z-index: 4;
+    }
+    .needle.south {
+        top: 50%;
+        background: linear-gradient(to bottom, #ded5e8 0%, #cdc2dd 100%);
+        clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+        filter: none;
+    }
+    .hub {
+        position: absolute;
+        left: 50%; top: 50%;
+        width: 16px; height: 16px;
+        margin: -8px 0 0 -8px;
+        border-radius: 50%;
+        background: #fff;
+        border: 2px solid var(--pink-soft);
+        box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        z-index: 6;
+    }
+
+    /* ===== 数値表示 ===== */
+    .readout {
+        margin-top: 24px;
+        z-index: 1;
+    }
+    .direction-name {
+        font-size: 2rem;
+        color: var(--ink);
+        letter-spacing: 0.12em;
+        line-height: 1.2;
+    }
+    .degrees {
+        font-family: "Helvetica Neue", sans-serif;
+        font-size: 0.85rem;
+        color: var(--ink-soft);
+        letter-spacing: 0.1em;
+        margin-top: 4px;
+    }
+
+    /* ラッキー方位カード */
+    .lucky-card {
+        margin-top: 18px;
+        padding: 12px 22px;
+        background: rgba(255,255,255,0.8);
+        border: 1px solid #f4e3ea;
+        border-radius: 18px;
+        box-shadow: 0 6px 18px rgba(198,160,175,0.13);
+        max-width: 320px;
+        z-index: 1;
+    }
+    .lucky-card .head {
+        font-size: 0.6rem;
+        font-family: sans-serif;
+        letter-spacing: 0.2em;
+        color: var(--gold);
+        margin-bottom: 5px;
+    }
+    .lucky-card .body {
+        font-size: 0.85rem;
+        line-height: 1.7;
+        color: var(--ink);
+    }
+    .lucky-card .body b {
+        color: var(--pink);
+        font-weight: normal;
+        font-size: 1.05rem;
+    }
+
+    /* ===== スタート画面 / エラー ===== */
+    .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(255,250,246,0.94);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 28px;
+        z-index: 20;
+        transition: opacity 0.4s ease;
+    }
+    .overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+    .overlay .emoji {
+        font-size: 3.4rem;
+        margin-bottom: 14px;
+        animation: bob 2.6s ease-in-out infinite;
+    }
+    @keyframes bob {
+        0%, 100% { transform: translateY(0)    rotate(-4deg); }
+        50%      { transform: translateY(-8px) rotate(4deg); }
+    }
+    .overlay h2 {
+        font-size: 1.15rem;
+        letter-spacing: 0.2em;
+        color: var(--pink);
+        font-weight: normal;
+        margin: 0 0 10px;
+    }
+    .overlay p {
+        font-size: 0.8rem;
+        line-height: 1.9;
+        color: var(--ink-soft);
+        margin: 0 0 24px;
+        max-width: 300px;
+    }
+    .btn {
+        font-family: inherit;
+        font-size: 0.95rem;
+        letter-spacing: 0.18em;
+        color: #fff;
+        background: linear-gradient(135deg, #f0aec0 0%, var(--lavender) 100%);
+        border: none;
+        border-radius: 999px;
+        padding: 15px 44px;
+        box-shadow: 0 8px 20px rgba(232,160,180,0.4);
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .btn:active {
+        transform: scale(0.95);
+        box-shadow: 0 4px 12px rgba(232,160,180,0.35);
+    }
+    .note {
+        margin-top: 20px;
+        font-size: 0.65rem;
+        font-family: sans-serif;
+        line-height: 1.8;
+        color: #c4b0b8;
+        max-width: 290px;
+    }
+
+    /* キャリブレーション案内 */
+    .calib {
+        position: fixed;
+        left: 50%;
+        bottom: calc(16px + env(safe-area-inset-bottom));
+        transform: translateX(-50%);
+        font-family: sans-serif;
+        font-size: 0.62rem;
+        letter-spacing: 0.08em;
+        color: #c4b0b8;
+        white-space: nowrap;
+        background: rgba(255,255,255,0.75);
+        padding: 7px 16px;
+        border-radius: 999px;
+        z-index: 2;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+    .calib.show { opacity: 1; }
+
+    @media (max-height: 640px) {
+        .compass-wrap { width: min(62vw, 230px); }
+        .direction-name { font-size: 1.6rem; }
+        .lucky-card { display: none; }
+    }
+</style>
+</head>
+<body>
+
+<h1>ゆめコンパス</h1>
+<div class="subtitle">YUME COMPASS ♡ いまどっち向いてる？</div>
+
+<div class="compass-wrap">
+    <div class="indicator"></div>
+    <div class="dial" id="dial">
+        <div class="needle"></div>
+        <div class="needle south"></div>
+        <div class="hub"></div>
+    </div>
+</div>
+
+<div class="readout">
+    <div class="direction-name" id="dirName">ー</div>
+    <div class="degrees" id="degrees">--°</div>
+</div>
+
+<div class="lucky-card">
+    <div class="head">TODAY'S LUCKY DIRECTION</div>
+    <div class="body" id="luckyText">…</div>
+</div>
+
+<div class="calib" id="calib">⟳ 8の字に動かすと精度アップ</div>
+
+<div class="overlay" id="overlay">
+    <div class="emoji">🧭</div>
+    <h2 id="ovTitle">はじめる</h2>
+    <p id="ovText">スマホの向きセンサーを使って<br>方角をしらべます。<br>おまじないのつもりで、そっとタップ。</p>
+    <button class="btn" id="startBtn">つかってみる</button>
+    <div class="note" id="ovNote">※ センサーの利用許可をたずねられたら「許可」を選んでね</div>
+</div>
+
+<script>
+(function () {
+    "use strict";
+
+    var DIRS = ["北","北北東","北東","東北東","東","東南東","南東","南南東",
+                "南","南南西","南西","西南西","西","西北西","北西","北北西"];
+
+    var LUCKY = [
+        { dir: "北",   deg: 0,   msg: "落ち着きたい日。ひとり時間がいい感じ。" },
+        { dir: "北東", deg: 45,  msg: "はじまりの気配。思いきってどうぞ。" },
+        { dir: "東",   deg: 90,  msg: "朝いちばんの行動が吉。早起きしてみて。" },
+        { dir: "南東", deg: 135, msg: "ご縁がひらく日。連絡はこちらから。" },
+        { dir: "南",   deg: 180, msg: "見た目に手をかけると運が上向き。" },
+        { dir: "南西", deg: 225, msg: "ゆっくり整える日。片づけが吉。" },
+        { dir: "西",   deg: 270, msg: "おいしいものと臨時収入の予感。" },
+        { dir: "北西", deg: 315, msg: "頼れる人に相談すると道がひらく。" }
+    ];
+
+    var dial     = document.getElementById("dial");
+    var dirName  = document.getElementById("dirName");
+    var degrees  = document.getElementById("degrees");
+    var overlay  = document.getElementById("overlay");
+    var startBtn = document.getElementById("startBtn");
+    var ovTitle  = document.getElementById("ovTitle");
+    var ovText   = document.getElementById("ovText");
+    var ovNote   = document.getElementById("ovNote");
+    var calib    = document.getElementById("calib");
+
+    /* ---------- 文字盤の目盛りとラベルを描く ---------- */
+    function buildDial() {
+        var frag = document.createDocumentFragment();
+
+        for (var d = 0; d < 360; d += 5) {
+            if (d % 45 === 0) continue;              // 方位文字の場所は目盛りを置かない
+            var t = document.createElement("div");
+            t.className = "tick " + (d % 15 === 0 ? "major" : "minor");
+            t.style.transform = "rotate(" + d + "deg)";
+            t.appendChild(document.createElement("i"));
+            frag.appendChild(t);
+        }
+
+        var marks = [
+            { deg: 0,   text: "北", north: true },
+            { deg: 45,  text: "北東" },
+            { deg: 90,  text: "東" },
+            { deg: 135, text: "南東" },
+            { deg: 180, text: "南" },
+            { deg: 225, text: "南西" },
+            { deg: 270, text: "西" },
+            { deg: 315, text: "北西" }
+        ];
+        marks.forEach(function (m) {
+            var el = document.createElement("div");
+            el.className = "label" + (m.north ? " north" : "");
+            el.style.transform = "rotate(" + m.deg + "deg)";
+            var s = document.createElement("span");
+            s.textContent = m.text;
+            // 文字盤が回っても文字はいつも読める向きに保つ
+            s.style.transform = "rotate(calc(" + (-m.deg) + "deg - var(--rot, 0deg)))";
+            el.appendChild(s);
+            frag.appendChild(el);
+        });
+
+        dial.insertBefore(frag, dial.firstChild);
+    }
+
+    /* ---------- 今日のラッキー方位 ---------- */
+    var lucky;
+    function setupLucky() {
+        var now = new Date();
+        var seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+        lucky = LUCKY[seed % LUCKY.length];
+
+        document.getElementById("luckyText").innerHTML =
+            "今日のラッキー方位は <b>" + lucky.dir + "</b><br>" + lucky.msg;
+
+        var mark = document.createElement("div");
+        mark.className = "lucky-mark";
+        mark.style.transform = "rotate(" + lucky.deg + "deg)";
+        var s = document.createElement("span");
+        s.textContent = "✧";
+        s.style.transform = "rotate(calc(" + (-lucky.deg) + "deg - var(--rot, 0deg)))";
+        mark.appendChild(s);
+        dial.insertBefore(mark, dial.firstChild);
+    }
+
+    /* ---------- きらきら ---------- */
+    function sparkles() {
+        var chars = ["✧", "･", "❀", "✦"];
+        for (var i = 0; i < 14; i++) {
+            var s = document.createElement("div");
+            s.className = "sparkle";
+            s.textContent = chars[i % chars.length];
+            s.style.left = Math.random() * 100 + "vw";
+            s.style.bottom = "-20px";
+            s.style.animationDuration = (9 + Math.random() * 8) + "s";
+            s.style.animationDelay = (-Math.random() * 12) + "s";
+            s.style.fontSize = (0.6 + Math.random() * 0.7) + "rem";
+            document.body.appendChild(s);
+        }
+    }
+
+    /* ---------- 方位の計算 ---------- */
+    var targetHeading = null;   // 0=北, 時計回り。端末が向いている方位
+    var shownRotation = 0;      // 文字盤の実際の回転量（連続値）
+    var hasReading = false;
+    var lastMoveAt = 0;
+
+    function screenAngle() {
+        if (screen.orientation && typeof screen.orientation.angle === "number") {
+            return screen.orientation.angle;
+        }
+        return (typeof window.orientation === "number") ? window.orientation : 0;
+    }
+
+    function onOrientation(e) {
+        var heading = null;
+
+        if (typeof e.webkitCompassHeading === "number" && !isNaN(e.webkitCompassHeading)) {
+            // iOS: すでに真北基準の方位角
+            heading = e.webkitCompassHeading;
+        } else if (e.alpha !== null && typeof e.alpha === "number" &&
+                   (e.absolute === true || e.type === "deviceorientationabsolute")) {
+            // Android など: alpha は反時計回りなので反転し、画面の回転を補正
+            heading = 360 - e.alpha;
+            heading = heading + screenAngle();
+        } else {
+            return;
+        }
+
+        heading = ((heading % 360) + 360) % 360;
+
+        if (!hasReading) {
+            hasReading = true;
+            shownRotation = -heading;
+            overlay.classList.add("hidden");
+            calib.classList.add("show");
+            setTimeout(function () { calib.classList.remove("show"); }, 7000);
+        }
+        targetHeading = heading;
+        lastMoveAt = Date.now();
+    }
+
+    /* なめらかに追従させる（0°/360°をまたいでも最短で回す） */
+    function tick() {
+        if (targetHeading !== null) {
+            var want = -targetHeading;
+            var diff = want - shownRotation;
+            diff = ((diff + 180) % 360 + 360) % 360 - 180;   // -180〜180 に正規化
+            shownRotation += diff * 0.18;
+
+            dial.style.transform = "rotate(" + shownRotation + "deg)";
+            dial.style.setProperty("--rot", shownRotation + "deg");
+
+            var h = Math.round(targetHeading);
+            degrees.textContent = (h === 360 ? 0 : h) + "°";
+            dirName.textContent = DIRS[Math.round(targetHeading / 22.5) % 16];
+        }
+        requestAnimationFrame(tick);
+    }
+
+    /* ---------- センサー開始 ---------- */
+    function listen() {
+        if ("ondeviceorientationabsolute" in window) {
+            window.addEventListener("deviceorientationabsolute", onOrientation, true);
+        }
+        window.addEventListener("deviceorientation", onOrientation, true);
+
+        // しばらく反応がなければ非対応とみなす
+        setTimeout(function () {
+            if (!hasReading) {
+                fail("うまく読めないみたい",
+                     "この端末では方位センサーが使えないか、<br>ブラウザが対応していないようです。<br>スマホのSafari / Chromeで、<br>httpsのページとして開いてみてね。",
+                     "※ PCや一部のブラウザでは方角を取得できません");
+            }
+        }, 2500);
+    }
+
+    function fail(title, text, note) {
+        overlay.classList.remove("hidden");
+        ovTitle.textContent = title;
+        ovText.innerHTML = text;
+        ovNote.innerHTML = note || "";
+        startBtn.textContent = "もういちど";
+    }
+
+    startBtn.addEventListener("click", function () {
+        ovText.innerHTML = "センサーをさがしています…";
+
+        var DOE = window.DeviceOrientationEvent;
+        if (DOE && typeof DOE.requestPermission === "function") {
+            // iOS 13+ はユーザー操作からの許可要求が必須
+            DOE.requestPermission().then(function (res) {
+                if (res === "granted") {
+                    listen();
+                } else {
+                    fail("許可がもらえませんでした",
+                         "方角をしらべるには<br>「動作とセンサー」の利用許可が必要です。<br>ページを再読み込みして、<br>もういちど試してみてね。",
+                         "※ 設定 → Safari →「モーションと画面の向きのアクセス」がオンかも確認してみて");
+                }
+            }).catch(function () {
+                fail("うまくいきませんでした",
+                     "もういちどタップしてみてね。",
+                     "※ httpsのページとして開く必要があります");
+            });
+        } else if (DOE) {
+            listen();
+        } else {
+            fail("非対応の端末です",
+                 "このブラウザは向きセンサーに<br>対応していないようです。<br>スマホで開いてみてね。",
+                 "");
+        }
+    });
+
+    buildDial();
+    setupLucky();
+    sparkles();
+    tick();
+})();
+</script>
+</body>
+</html>

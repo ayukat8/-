@@ -315,6 +315,20 @@
         transform: scale(0.95);
         box-shadow: 0 4px 12px rgba(232,160,180,0.35);
     }
+    .btn:focus-visible {
+        outline: 2px solid var(--lavender);
+        outline-offset: 3px;
+    }
+    .btn.ghost {
+        margin-top: 14px;
+        color: var(--pink);
+        background: transparent;
+        border: 1px solid var(--pink-soft);
+        box-shadow: none;
+        font-size: 0.8rem;
+        padding: 11px 30px;
+    }
+    .btn[hidden] { display: none; }
     .note {
         margin-top: 20px;
         font-size: 0.65rem;
@@ -343,6 +357,17 @@
         transition: opacity 0.4s ease;
     }
     .calib.show { opacity: 1; }
+
+    /* デモモード中は文字盤をつまんで回せる */
+    .compass-wrap.demo {
+        cursor: grab;
+        touch-action: none;
+    }
+    .compass-wrap.demo:active { cursor: grabbing; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .sparkle, .lucky-mark span, .overlay .emoji { animation: none; }
+    }
 
     @media (max-height: 640px) {
         .compass-wrap { width: min(62vw, 230px); }
@@ -382,6 +407,7 @@
     <h2 id="ovTitle">はじめる</h2>
     <p id="ovText">スマホの向きセンサーを使って<br>方角をしらべます。<br>おまじないのつもりで、そっとタップ。</p>
     <button class="btn" id="startBtn">つかってみる</button>
+    <button class="btn ghost" id="demoBtn" hidden>デモモードで見る</button>
     <div class="note" id="ovNote">※ センサーの利用許可をたずねられたら「許可」を選んでね</div>
 </div>
 
@@ -408,6 +434,8 @@
     var degrees  = document.getElementById("degrees");
     var overlay  = document.getElementById("overlay");
     var startBtn = document.getElementById("startBtn");
+    var demoBtn  = document.getElementById("demoBtn");
+    var wrap     = document.querySelector(".compass-wrap");
     var ovTitle  = document.getElementById("ovTitle");
     var ovText   = document.getElementById("ovText");
     var ovNote   = document.getElementById("ovNote");
@@ -492,6 +520,8 @@
     var shownRotation = 0;      // 文字盤の実際の回転量（連続値）
     var hasReading = false;
     var lastMoveAt = 0;
+    var demoMode = false;
+    var demoDrifting = false;
 
     function screenAngle() {
         if (screen.orientation && typeof screen.orientation.angle === "number") {
@@ -501,6 +531,7 @@
     }
 
     function onOrientation(e) {
+        if (demoMode) return;
         var heading = null;
 
         if (typeof e.webkitCompassHeading === "number" && !isNaN(e.webkitCompassHeading)) {
@@ -528,8 +559,56 @@
         lastMoveAt = Date.now();
     }
 
+    /* ---------- デモモード（センサーが使えない環境で見るため） ---------- */
+    function startDemo() {
+        demoMode = true;
+        demoDrifting = true;
+        targetHeading = 22;
+        shownRotation = -22;
+        overlay.classList.add("hidden");
+        wrap.classList.add("demo");
+        calib.textContent = "✋ 文字盤をドラッグすると回せます（デモ）";
+        calib.classList.add("show");
+
+        var dragging = false;
+        var lastAngle = 0;
+
+        function angleOf(ev) {
+            var r = wrap.getBoundingClientRect();
+            return Math.atan2(ev.clientY - (r.top + r.height / 2),
+                              ev.clientX - (r.left + r.width / 2)) * 180 / Math.PI;
+        }
+
+        wrap.addEventListener("pointerdown", function (ev) {
+            dragging = true;
+            demoDrifting = false;
+            lastAngle = angleOf(ev);
+            wrap.setPointerCapture(ev.pointerId);
+        });
+
+        wrap.addEventListener("pointermove", function (ev) {
+            if (!dragging) return;
+            var a = angleOf(ev);
+            var d = ((a - lastAngle + 180) % 360 + 360) % 360 - 180;
+            lastAngle = a;
+            // 文字盤の回転は -方位角なので、時計回りに引くと方位角は減る
+            targetHeading = ((targetHeading - d) % 360 + 360) % 360;
+        });
+
+        function release(ev) {
+            if (!dragging) return;
+            dragging = false;
+            if (wrap.hasPointerCapture(ev.pointerId)) wrap.releasePointerCapture(ev.pointerId);
+        }
+        wrap.addEventListener("pointerup", release);
+        wrap.addEventListener("pointercancel", release);
+    }
+
     /* なめらかに追従させる（0°/360°をまたいでも最短で回す） */
     function tick() {
+        if (demoDrifting) {
+            targetHeading = (targetHeading + 0.25) % 360;
+        }
         if (targetHeading !== null) {
             var want = -targetHeading;
             var diff = want - shownRotation;
@@ -569,7 +648,10 @@
         ovText.innerHTML = text;
         ovNote.innerHTML = note || "";
         startBtn.textContent = "もういちど";
+        demoBtn.hidden = false;
     }
+
+    demoBtn.addEventListener("click", startDemo);
 
     startBtn.addEventListener("click", function () {
         ovText.innerHTML = "センサーをさがしています…";

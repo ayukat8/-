@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#fff6f7">
+<title>おまじないポケット ♡</title>
+<style>
+    :root {
+        --pink:      #e8a0b4;
+        --lavender:  #c8b6e2;
+        --cream:     #fffaf6;
+        --ink:       #6b5560;
+        --ink-soft:  #a89099;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+        margin: 0;
+        min-height: 100dvh;
+        font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+        color: var(--ink);
+        background:
+            radial-gradient(circle at 20% 10%, #fdeef3 0%, transparent 55%),
+            radial-gradient(circle at 85% 85%, #ece5f8 0%, transparent 50%),
+            var(--cream);
+        background-attachment: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px 24px calc(40px + env(safe-area-inset-bottom));
+    }
+
+    h1 {
+        font-size: 1.1rem;
+        letter-spacing: 0.3em;
+        color: var(--pink);
+        font-weight: normal;
+        margin: 0 0 6px;
+    }
+    .subtitle {
+        font-size: 0.62rem;
+        font-family: sans-serif;
+        letter-spacing: 0.2em;
+        color: var(--ink-soft);
+        margin-bottom: 34px;
+    }
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+        max-width: 340px;
+    }
+
+    a.item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        text-align: left;
+        text-decoration: none;
+        color: inherit;
+        background: rgba(255,255,255,0.85);
+        border: 1px solid #f4e3ea;
+        border-radius: 22px;
+        padding: 20px 22px;
+        box-shadow: 0 8px 22px rgba(198,160,175,0.15);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    a.item:active {
+        transform: scale(0.97);
+        box-shadow: 0 4px 12px rgba(198,160,175,0.15);
+    }
+    a.item .icon {
+        font-size: 2rem;
+        line-height: 1;
+        flex: 0 0 auto;
+    }
+    a.item .name {
+        font-size: 1.05rem;
+        letter-spacing: 0.08em;
+        margin-bottom: 4px;
+    }
+    a.item .desc {
+        font-size: 0.7rem;
+        font-family: sans-serif;
+        line-height: 1.6;
+        color: var(--ink-soft);
+    }
+
+    .note {
+        margin-top: 30px;
+        font-size: 0.62rem;
+        font-family: sans-serif;
+        line-height: 1.9;
+        color: #c4b0b8;
+        max-width: 300px;
+    }
+</style>
+</head>
+<body>
+
+<h1>おまじないポケット</h1>
+<div class="subtitle">FOR YOUR LITTLE DAY ♡</div>
+
+<div class="menu">
+    <a class="item" href="compass.html">
+        <div class="icon">🧭</div>
+        <div>
+            <div class="name">ゆめコンパス</div>
+            <div class="desc">いまどっち向いてる？ 今日のラッキー方位も</div>
+        </div>
+    </a>
+
+    <a class="item" href="map-demo.html">
+        <div class="icon">🗺️</div>
+        <div>
+            <div class="name">地図で方位を見る</div>
+            <div class="desc">タップした地点が吉方位かどうかを判定（実装サンプル）</div>
+        </div>
+    </a>
+
+    <a class="item" href="ai_studio_code.html">
+        <div class="icon">🌿</div>
+        <div>
+            <div class="name">Nature I Ching</div>
+            <div class="desc">自然のエレメントで占う、きょうのヒント</div>
+        </div>
+    </a>
+</div>
+
+<div class="note">※ ゆめコンパスはスマホで開いてね。<br>向きセンサーを使うので、パソコンでは方角が出ません。</div>
+
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#fff6f7">
+<title>地図で方位を見る（Leaflet + 地理院タイル）</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H"
+      crossorigin="anonymous">
+
+<style>
+    :root {
+        --pink:      #e8a0b4;
+        --pink-soft: #f7d3dc;
+        --lavender:  #c8b6e2;
+        --cream:     #fffaf6;
+        --ink:       #6b5560;
+        --ink-soft:  #a89099;
+        --gold:      #c9964a;
+        --gold-bg:   #f6ead2;
+        --grey:      #a89ba1;
+        --grey-bg:   #eceaec;
+        --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+        --sans:  "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; margin: 0; }
+
+    body {
+        font-family: var(--serif);
+        color: var(--ink);
+        background: var(--cream);
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        padding: 10px 16px calc(10px);
+        text-align: center;
+        border-bottom: 1px solid #f4e3ea;
+        background: rgba(255,255,255,0.9);
+    }
+    header h1 {
+        margin: 0;
+        font-size: 0.9rem;
+        font-weight: normal;
+        letter-spacing: 0.16em;
+        color: var(--pink);
+    }
+    header p {
+        margin: 4px 0 0;
+        font-family: var(--sans);
+        font-size: 0.62rem;
+        line-height: 1.6;
+        color: var(--ink-soft);
+    }
+
+    /* 何をセットするかの切替 */
+    .modes {
+        display: flex;
+        gap: 7px;
+        padding: 9px 12px;
+        background: rgba(255,255,255,0.9);
+        border-bottom: 1px solid #f4e3ea;
+    }
+    .modes button {
+        flex: 1;
+        font-family: var(--sans);
+        font-size: 0.72rem;
+        padding: 10px 6px;
+        border-radius: 11px;
+        border: 1px solid #f0e0e6;
+        background: #fff;
+        color: var(--ink-soft);
+        cursor: pointer;
+    }
+    .modes button[aria-pressed="true"] {
+        background: var(--pink);
+        border-color: var(--pink);
+        color: #fff;
+    }
+    .modes button:focus-visible { outline: 2px solid var(--lavender); outline-offset: 2px; }
+
+    #map {
+        flex: 1;
+        min-height: 240px;
+        background: #eef1f3;
+    }
+    .leaflet-container { font-family: var(--sans); }
+
+    .pin {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    .pin.origin { background: var(--lavender); }
+    .pin.dest   { background: var(--pink); }
+
+    /* 判定パネル */
+    .panel {
+        padding: 13px 16px calc(13px + env(safe-area-inset-bottom));
+        border-top: 1px solid #f4e3ea;
+        background: rgba(255,255,255,0.95);
+    }
+    .points {
+        display: flex;
+        gap: 10px;
+        font-family: var(--sans);
+        font-size: 0.63rem;
+        color: var(--ink-soft);
+        margin-bottom: 9px;
+    }
+    .points div { flex: 1; }
+    .points b { display: block; color: var(--ink); font-size: 0.7rem; margin-bottom: 2px; font-weight: normal; }
+
+    .verdict {
+        border-radius: 14px;
+        padding: 12px 14px;
+        text-align: center;
+        background: rgba(255,255,255,0.8);
+        border: 1px solid #f0e6ea;
+    }
+    .verdict.good { background: var(--gold-bg); border-color: #e8d5ae; }
+    .verdict.bad  { background: var(--grey-bg); border-color: #ddd7da; }
+    .verdict .big { font-size: 1.5rem; letter-spacing: 0.1em; }
+    .verdict .deg {
+        font-family: var(--sans);
+        font-size: 0.72rem;
+        color: var(--ink-soft);
+        font-variant-numeric: tabular-nums;
+        margin-top: 2px;
+    }
+    .verdict .jd { margin-top: 7px; font-size: 0.95rem; }
+    .verdict .jd .ttl { font-size: 0.76rem; color: var(--ink-soft); display: block; margin-top: 2px; }
+
+    .foot {
+        font-family: var(--sans);
+        font-size: 0.58rem;
+        line-height: 1.7;
+        color: #bfaeb6;
+        text-align: center;
+        margin-top: 9px;
+    }
+    .foot a { color: #bfaeb6; }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>地図で方位を見る</h1>
+    <p>Leaflet ＋ 地理院タイルの実装サンプル。地図をタップすると座標が取れます（検索APIは使いません）</p>
+</header>
+
+<div class="modes">
+    <button id="mOrigin" aria-pressed="false">タップで基準点</button>
+    <button id="mDest" aria-pressed="true">タップで目的地</button>
+</div>
+
+<div id="map"></div>
+
+<div class="panel">
+    <div class="points">
+        <div><b>基準点</b><span id="pOrigin">—</span></div>
+        <div><b>目的地</b><span id="pDest">—</span></div>
+    </div>
+    <div class="verdict" id="verdict"></div>
+    <div class="foot">
+        金色＝吉方位、灰色＝凶方位（データはダミー）。ピンはドラッグで動かせます。<br>
+        地理院タイルは日本国内のみ。海外は白地になります。
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH"
+        crossorigin="anonymous"></script>
+<script>
+(function () {
+"use strict";
+
+/* ===== ダミーの吉凶データ（本番は奇門遁甲ロジックから受け取る） ===== */
+const SECTORS = [
+    { bearing: 0,   span: 45, name: "北",   verdict: "neutral" },
+    { bearing: 45,  span: 45, name: "北東", verdict: "neutral" },
+    { bearing: 90,  span: 45, name: "東",   verdict: "neutral" },
+    { bearing: 135, span: 45, name: "東南", verdict: "auspicious",   title: "生門", note: "道中が順調" },
+    { bearing: 180, span: 45, name: "南",   verdict: "inauspicious", title: "景門", note: "予定が崩れやすい" },
+    { bearing: 225, span: 45, name: "南西", verdict: "inauspicious", title: "死門", note: "疲れが出やすい" },
+    { bearing: 270, span: 45, name: "西",   verdict: "neutral" },
+    { bearing: 315, span: 45, name: "北西", verdict: "auspicious",   title: "休門", note: "ゆったり過ごせる" }
+];
+
+const NAMES16 = ["北","北北東","北東","東北東","東","東南東","南東","南南東",
+                 "南","南南西","南西","西南西","西","西北西","北西","北北西"];
+
+/* ===== 方位計算（仕様書 §2: 地図上の直線＝等角航路） ===== */
+const toRad = d => d * Math.PI / 180;
+const toDeg = r => r * 180 / Math.PI;
+
+function rhumbBearing(lat1, lng1, lat2, lng2) {
+    const p1 = toRad(lat1), p2 = toRad(lat2);
+    let dl = toRad(lng2 - lng1);
+    if (Math.abs(dl) > Math.PI) dl -= Math.sign(dl) * 2 * Math.PI;
+    const dps = Math.log(Math.tan(Math.PI / 4 + p2 / 2) / Math.tan(Math.PI / 4 + p1 / 2));
+    return (toDeg(Math.atan2(dl, dps)) + 360) % 360;
+}
+function distanceKm(lat1, lng1, lat2, lng2) {
+    const p1 = toRad(lat1), p2 = toRad(lat2), dp = p2 - p1, dl = toRad(lng2 - lng1);
+    const a = Math.sin(dp / 2) ** 2 + Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) ** 2;
+    return 6371 * 2 * Math.asin(Math.sqrt(a));
+}
+function angleDiff(a, b) { return Math.abs(((a - b + 540) % 360) - 180); }
+function sectorFor(bearing) {
+    return SECTORS.find(s => angleDiff(bearing, s.bearing) <= s.span / 2) || null;
+}
+
+/* ===== 地図 ===== */
+const map = L.map("map", { zoomControl: true }).setView([35.6812, 139.7671], 9);
+
+L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png", {
+    minZoom: 5,
+    maxZoom: 18,
+    attribution: '出典: <a href="https://maps.gsi.go.jp/development/ichiran.html">国土地理院</a>'
+}).addTo(map);
+
+let origin = L.latLng(35.6812, 139.7671);   // 東京駅
+let dest   = L.latLng(35.4657, 139.6223);   // 横浜駅
+let setting = "dest";
+
+// 既定のマーカー画像はCDNから読み込まれるため、画像を使わない divIcon にしている
+function pin(kind) {
+    return L.divIcon({
+        className: "",
+        html: '<div class="pin ' + kind + '"></div>',
+        iconSize: [18, 18],
+        iconAnchor: [9, 9]
+    });
+}
+const originMarker = L.marker(origin, { draggable: true, icon: pin("origin") }).addTo(map);
+const destMarker   = L.marker(dest,   { draggable: true, icon: pin("dest") }).addTo(map);
+originMarker.bindTooltip("基準点", { permanent: true, direction: "top", offset: [0, -12] });
+destMarker.bindTooltip("目的地",   { permanent: true, direction: "top", offset: [0, -12] });
+
+const line = L.polyline([origin, dest], { color: "#e8a0b4", weight: 3, opacity: 0.9 }).addTo(map);
+const wedgeLayer = L.layerGroup().addTo(map);
+
+/* 扇形は「投影後の座標で直線的に」作る（仕様書 §2 の描画整合）。
+   Leaflet の投影は Web メルカトルなので、等角航路＝画面上の直線になる。 */
+const REF_ZOOM = 8;
+const SECTOR_RADIUS_M = 400000;   // 400km
+
+function drawWedges() {
+    wedgeLayer.clearLayers();
+    const p0 = map.project(origin, REF_ZOOM);
+    // その緯度における「メートル → 投影ピクセル」の倍率
+    const scale = (256 * Math.pow(2, REF_ZOOM)) / (40075016.686 * Math.cos(toRad(origin.lat)));
+    const r = SECTOR_RADIUS_M * scale;
+
+    SECTORS.forEach(s => {
+        if (s.verdict === "neutral") return;
+        const a1 = s.bearing - s.span / 2, a2 = s.bearing + s.span / 2;
+        const pts = [map.unproject(p0, REF_ZOOM)];
+        for (let a = a1; a <= a2 + 0.001; a += 5) {
+            const t = toRad(a);
+            const p = L.point(p0.x + r * Math.sin(t), p0.y - r * Math.cos(t));
+            pts.push(map.unproject(p, REF_ZOOM));
+        }
+        const good = s.verdict === "auspicious";
+        L.polygon(pts, {
+            stroke: false,
+            fillColor: good ? "#c9964a" : "#a89ba1",
+            fillOpacity: good ? 0.28 : 0.15,
+            interactive: false
+        }).addTo(wedgeLayer);
+    });
+}
+
+/* ===== 判定表示 ===== */
+function fmt(ll) { return ll.lat.toFixed(4) + ", " + ll.lng.toFixed(4); }
+
+function update() {
+    originMarker.setLatLng(origin);
+    destMarker.setLatLng(dest);
+    line.setLatLngs([origin, dest]);
+    drawWedges();
+
+    document.getElementById("pOrigin").textContent = fmt(origin);
+    document.getElementById("pDest").textContent = fmt(dest);
+
+    const el = document.getElementById("verdict");
+    el.className = "verdict";
+
+    const km = distanceKm(origin.lat, origin.lng, dest.lat, dest.lng);
+    if (km < 0.5) {
+        el.innerHTML = '<div class="jd">基準点と目的地が近すぎます</div>';
+        return;
+    }
+
+    const b = rhumbBearing(origin.lat, origin.lng, dest.lat, dest.lng);
+    const s = sectorFor(b);
+    const good = s && s.verdict === "auspicious";
+    const bad  = s && s.verdict === "inauspicious";
+    if (good) el.classList.add("good");
+    if (bad)  el.classList.add("bad");
+
+    let jd;
+    if (good)     jd = "◎ 今日の吉方位です<span class='ttl'>" + s.name + " ・ " + s.title + " — " + s.note + "</span>";
+    else if (bad) jd = "△ 今日は避けたい方角です<span class='ttl'>" + s.name + " ・ " + s.title + " — " + s.note + "</span>";
+    else          jd = "特に吉凶のない方角です";
+
+    el.innerHTML =
+        '<div class="big">' + NAMES16[Math.round(b / 22.5) % 16] + '</div>' +
+        '<div class="deg">' + b.toFixed(1) + '° ／ ' +
+            (km >= 10 ? Math.round(km).toLocaleString() : km.toFixed(1)) + 'km</div>' +
+        '<div class="jd">' + jd + '</div>';
+}
+
+/* ===== 操作 ===== */
+// タップした地点の座標は、地図ライブラリが持っている。通信もAPIキーも不要
+map.on("click", e => {
+    if (setting === "origin") origin = e.latlng;
+    else dest = e.latlng;
+    update();
+});
+
+originMarker.on("drag", e => { origin = e.target.getLatLng(); update(); });
+destMarker.on("drag",   e => { dest   = e.target.getLatLng(); update(); });
+
+const btnO = document.getElementById("mOrigin"), btnD = document.getElementById("mDest");
+function setMode(m) {
+    setting = m;
+    btnO.setAttribute("aria-pressed", String(m === "origin"));
+    btnD.setAttribute("aria-pressed", String(m === "dest"));
+}
+btnO.addEventListener("click", () => setMode("origin"));
+btnD.addEventListener("click", () => setMode("dest"));
+
+update();
+})();
+</script>
+</body>
+</html>
